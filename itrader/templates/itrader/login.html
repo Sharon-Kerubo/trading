@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="UTF-8">
+        <title> iTrader | Login </title>
+        <link rel="stylesheet" type="text/css" href="{% static 'itrader/css/login.css' %}">
+        <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+            <meta name= "viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+<body>
+    <div class="container">
+        <input type="checkbox" id="flip">
+        <div class="cover">
+            <div class="front">
+                <img src="{% static 'itrader\images\yiorgos-ntrahas-lp8ZlyAZjy8-unsplash.jpg' %}" alt="">   
+                <div class="text">
+                    <span class="text-1">This plaform is built to increase accessibility to stockbrokerage services.</span>
+                    <span class="text-2">Let's get Trading</span>
+                </div>
+            </div>
+            <div class="back">
+                <img class="backImg" src="{% static 'itrader\images\yiorgos-ntrahas-lp8ZlyAZjy8-unsplash.jpg' %}" alt="">   
+                <div class="text">
+                    <span class="text-1">This plaform is built to increase accessibility to stockbrokerage services.</span>
+                    <span class="text-2">Let's get Trading</span>
+                </div>
+            </div>
+        </div>
+        <div class="forms">
+            <div class="form-content">
+                <div class="login-form">
+                    <div class="title">Login</div>
+                <form action="#">
+                    <div class="input-boxes">
+                        <div class="input-box">
+                            <i class='bx bxs-user'></i>   
+                            <input type="text" placeholder="User Name" required>
+                        </div>
+                        <div class="input-box">
+                            <i class='bx bxs-lock-alt'></i>
+                            <input type="text" placeholder="Password" required>
+                        </div>
+                        <div class="text"><a href="">Forgot password?</a></div>
+                        <div class="button input-box">
+                            <input type="submit" value="Submit">
+                        </div>
+                        <div class="text sign-up-text"> Don't have an account? <label for="flip">Register now</label></label></div>
+                    </div>
+                </form>
+            </div>    
+            <div class="signup-form">
+                <div class="title">Signup</div>
+            <form action="#">
+                <div class="input-boxes">
+                    <div class="input-box">
+                        <i class='bx bx-dialpad-alt'></i>  
+                        <input type="text" placeholder="CDS Number" required>
+                    </div>
+                    <div class="input-box">
+                        <i class='bx bxs-card'></i>
+                        <input type="text" placeholder="National ID No/Passport No/In Corporation No" required>
+                    </div>
+                    <div class="input-box">
+                        <i class='bx bxs-envelope' ></i>
+                        <input type="text" placeholder="Email Address" required>
+                    </div>
+                    <div class="button input-box">
+                        <input type="submit" value="Register">
+                    </div>
+                    <div class="text sign-up-text">Already have an account? <label for="flip">Login now</label></label></div>
+                </div>
+            </form>
+            </div>
+         </div>
+    </div>
+</body>
+</html>
