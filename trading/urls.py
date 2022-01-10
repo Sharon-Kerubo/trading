@@ -19,7 +19,7 @@ from django.urls import path,include
 app_name = 'itrader'
 
 urlpatterns = [
-    path('itrader/', include(('itrader.urls', 'itrader'), namespace='itrader')),
+    path('', include(('itrader.urls', 'itrader'), namespace='itrader')),
     path('admin/', admin.site.urls),
 
 ]
