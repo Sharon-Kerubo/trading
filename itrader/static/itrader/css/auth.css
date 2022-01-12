@@ -7,7 +7,7 @@
 }
 body{
     min-height: 100vh;
-    display: flex;
+    display: block;
     align-items: center;
     justify-content: center;
     background-image: linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.75)), url('/static/itrader/images/pexels-photo-1229861.jpeg');

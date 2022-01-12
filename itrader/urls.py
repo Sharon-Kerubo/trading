@@ -7,5 +7,6 @@ urlpatterns = [
     path('itrader', views.itrader, name='itrader'),
     path('signup', views.signup, name='signup'),
     path('signin', views.signin, name='signin'),
-    path('logout', views.logout, name='logout')
+    path('logout', views.logout, name='logout'),
+    path('activate/<slug:uidb64>/<slug:token>/', views.activate, name='activate'),
 ]

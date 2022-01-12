@@ -1,0 +1,10 @@
+{% autoescape off %}
+
+Welcome to iTrader
+Hello {{ name }}
+
+Please confirm your email by clicking on the following link.
+
+Confirmation Link: http://{{domain}}{% url 'itrader:activate' uidb64=uid token=token %}
+
+{% endautoescape %} 
