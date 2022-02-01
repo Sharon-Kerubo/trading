@@ -11,6 +11,9 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from . tokens import generate_token
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.forms import PasswordResetForm
+from django.db.models.query_utils import Q
 
 def home(request):
     return render(request, "itrader/home.html")
@@ -105,6 +108,31 @@ def activate(request, uidb64, token):
     else:
         return render(request, 'itrader/activation_failed.html')
 
-
-
-    
+def password_reset_request(request):
+    if request.method == "POST":
+        password_reset_form = PasswordResetForm(request.POST)
+        if password_reset_form.is_valid():
+            data = password_reset_form.cleaned_data['email']
+            associated_users = User.objects.filter(Q(email=data))
+            if associated_users.exists():
+                for user in associated_users:
+                    current_site = get_current_site(request)
+                    email_subject = "Password Reset Requested"
+                    reset_message = render_to_string("itrader/password/password_reset_email.txt",{
+                        'name': user.username,
+                        'domain': current_site.domain,
+                        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                        'token': default_token_generator.make_token(user),
+                        'protocol': 'http',
+                    })
+                    email = EmailMessage(
+                        email_subject,
+                        reset_message,
+                        settings.EMAIL_HOST_USER,
+                        [user.email],
+                    )
+                    email.fail_silently = True
+                    email.send()
+                    return redirect ("/password_reset/done/")
+    password_reset_form = PasswordResetForm()
+    return render(request=request, template_name="itrader/password/password_reset.html", context={"password_reset_form":password_reset_form})
