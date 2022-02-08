@@ -14,12 +14,16 @@ from . tokens import generate_token
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.forms import PasswordResetForm
 from django.db.models.query_utils import Q
+import json, psycopg2
 
 def home(request):
     return render(request, "itrader/home.html")
 
-def itrader(request):
-    return render(request, "itrader/itrader.html")
+def contactus(request):
+    return render(request, "itrader/contactus.html")
+
+def aboutus(request):
+    return render(request, "itrader/aboutus.html")
 
 def signin(request):
     if request.method == "POST":
@@ -136,3 +140,32 @@ def password_reset_request(request):
                     return redirect ("/password_reset/done/")
     password_reset_form = PasswordResetForm()
     return render(request=request, template_name="itrader/password/password_reset.html", context={"password_reset_form":password_reset_form})
+
+def itrader(request):
+    try:
+        #connect to the db
+        con = psycopg2.connect(
+            host = 'localhost',
+            database = 'itrader',
+            user = 'postgres',
+            password = 'postgres',
+            port = 5432
+        )
+
+        #cursor
+        cur = con.cursor()
+        #execute query
+        cur .execute("select array_to_json(array_agg(row_to_json(stockdata))) from(select security,lastprice,demandqty,demandprice, supplyprice,supplyqty,lastqty,high,low from itrader_stockdata) stockdata")
+        data = cur.fetchone()
+
+        data = json.dumps(data[0])
+        #close cursor
+        cur.close()  
+        return render(request, 
+                  "itrader/itrader.html", 
+                  context={'data': data})
+    except:
+       return ('Error Connecting') 
+    finally:
+        #close the connection
+        con.close()  
