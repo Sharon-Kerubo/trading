@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'crispy_forms',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -87,6 +88,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'trading.wsgi.application'
 
+ASGI_APPLICATION = 'trading.routing.application'
+
+CHANNEL_LAYERS = {
+    'default' : {
+        'BACKEND' : 'channels_redis.core.RedisChannelLayer',
+        'CONFIG' : {
+            'hosts' : [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases

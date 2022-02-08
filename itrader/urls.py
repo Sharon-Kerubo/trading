@@ -12,4 +12,6 @@ urlpatterns = [
     path('logout', views.logout, name='logout'),
     path('activate/<slug:uidb64>/<slug:token>/', views.activate, name='activate'),
     path("password_reset", views.password_reset_request, name="password_reset"),
+    path('itrader/chat', views.chat, name='chat'),
+    path('itrader/<str:room_name>/', views.room, name='room'),
 ]

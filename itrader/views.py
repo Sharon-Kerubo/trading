@@ -25,6 +25,14 @@ def contactus(request):
 def aboutus(request):
     return render(request, "itrader/aboutus.html")
 
+def room(request, room_name):
+  username = request.GET.get('username', 'Anonymous')
+
+  return render(request, 'itrader/room.html', {'room_name': room_name, 'username': username})
+
+def chat(request):
+    return render(request, "itrader/chat.html")
+
 def signin(request):
     if request.method == "POST":
         username = request.POST['username']

@@ -218,7 +218,6 @@ body {
     left: 78px;
     right:78px;
     transition: all 0.5s ease;
-    z-index: -1;
 }
 .sidebar.active .home_content{
     width: calc(100% - 240px);

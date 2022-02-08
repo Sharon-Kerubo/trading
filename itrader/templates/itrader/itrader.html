@@ -4,6 +4,8 @@
     <head>
         <meta charset="UTF-8">
         <title> iTrader </title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        
         <link rel="stylesheet" type="text/css" href="{% static 'itrader/css/itrader.css' %}">
         <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
         <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
@@ -28,11 +30,11 @@
                 <span class="tooltip">Search...</span>
             </li> 
             <li>
-                <a href="#">
+                <a href="#" data-bs-toggle="tooltip" title="Watchlist" >
                     <i class='bx bx-stopwatch'></i>
                     <span class="links_name">Watchlist</span>
                 </a>
-                <span class="tooltip">Watchlist</span>
+                <!-- <span class="tooltip">Watchlist</span> -->
             </li>
             <li>
                 <a href="#">
@@ -160,6 +162,29 @@
     </div> 
     
     <script src="{% static 'itrader/js/script.js' %}"></script>
-    
+    <script>
+        // // Automatically set the focus to the room name input
+        // document.querySelector('#room-name-input').focus();
+
+        // // If you hit "enter" on the keyboard, trigger the click method
+        // document.querySelector('#room-name-input').onkeyup = function(e) {
+        // if (e.keyCode === 13) {
+        //     document.querySelector('#room-name-submit').click();
+        // }
+        // };
+
+        // // When you submit the form, redirect the user to the room page
+        // document.querySelector('#room-name-submit').onclick = function(e) {
+        // var roomName = document.querySelector('#room-name-input').value;
+        // var userName = document.querySelector('#username-input').value;
+
+        // window.location.replace(roomName + '/?username=' + userName);
+        // };
+        var roomName = "General"
+        var userName = "Sharon"
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>

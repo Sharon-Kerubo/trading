@@ -9,3 +9,6 @@ btn.onclick = function(){
 searchBtn.onclick = function(){
     sidebar.classList.toggle("active");
 }
+$(document).ready(function(){
+    $('[data-bs-toggle="tooltip"]').tooltip();   
+});
