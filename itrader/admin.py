@@ -3,17 +3,17 @@ from django.core.paginator import Paginator
 from django.core.cache import cache
 from django.db import models
 
-from itrader.models import PublicChatRoom, PublicRoomChatMessage
+from itrader.models import Message, Room
 
-class PublicChatRoomAdmin(admin.ModelAdmin):
+class RoomAdmin(admin.ModelAdmin):
     list_display = ['id', 'title']
     search_fields = ['id', 'title']
     list_display = ['id',]
 
     class Meta:
-        model = PublicChatRoom
+        model = Room
 
-admin.site.register(PublicChatRoom, PublicChatRoomAdmin)
+admin.site.register(Room, RoomAdmin)
 
 # Resource: http://masnun.rocks/2017/03/20/django-admin-expensive-count-all-queries/
 class CachingPaginator(Paginator):
@@ -36,15 +36,15 @@ class CachingPaginator(Paginator):
 
     count = property(_get_count)
 
-class PublicRoomChatMessageAdmin(admin.ModelAdmin):
-    list_filter = ['room', 'user','timestamp']
-    list_display = ['room', 'user','timestamp','content']
+class MessageAdmin(admin.ModelAdmin):
+    list_filter = ['room', 'username','date_added']
+    list_display = ['room', 'username','date_added','content']
     search_fields = ['room__title', 'title', 'user__username','content']
-    readonly_fileds = ['id', 'user', 'room','timestamp']
+    readonly_fields = ['id', 'username', 'room','date_added']
 
     show_full_result_count = False
     paginator = CachingPaginator
 
     class Meta:
-        model = PublicRoomChatMessage
-admin.site.register(PublicRoomChatMessage, PublicRoomChatMessageAdmin)
+        model = Message
+admin.site.register(Message, MessageAdmin)

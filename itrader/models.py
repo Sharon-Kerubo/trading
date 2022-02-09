@@ -13,9 +13,18 @@ class StockData(models.Model):
     high= models.IntegerField()
     low= models.IntegerField()
 
-class PublicChatRoom(models.Model):
+class Message(models.Model):
+    username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    room = models.CharField(max_length=255)
+    content = models.TextField()
+    date_added = models.DateTimeField()
+
+    class Meta:
+        ordering = ('date_added',)
+
+class Room(models.Model):
     title = models.CharField(max_length=255, unique=True, blank=False,)
-    users =models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, help_text="users who are connected to the chat")
+    users = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, help_text="users who are connected to the chat")
 
     def __str__(self):
         return self.title
@@ -43,20 +52,20 @@ class PublicChatRoom(models.Model):
         # returns the channel name that sockets should subscribe to and get sent messages as they are generated
         return f"PublicChatRoom-{self.id}"
 
-class PublicRoomChatMessageManager(models.Manager):
-    def by_room(self,room):
-        #return new messages first
-        qs = PublicRoomChatMessage.object.filter(room=room).order_by("-timestamp")
-        return qs
+# class PublicRoomChatMessageManager(models.Manager):
+#     def by_room(self,room):
+#         #return new messages first
+#         qs = PublicRoomChatMessage.object.filter(room=room).order_by("-timestamp")
+#         return qs
 
-class PublicRoomChatMessage(models.Model):
-    # Chat message created by user inside a PublicChatRoom
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    room = models.ForeignKey(PublicChatRoom, on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(auto_now_add = True)
-    content = models.TextField(unique=False, blank=False)
+# class PublicRoomChatMessage(models.Model):
+#     # Chat message created by user inside a PublicChatRoom
+#     username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+#     room = models.ForeignKey(PublicChatRoom, on_delete=models.CASCADE)
+#     timestamp = models.DateTimeField(auto_now_add = True)
+#     content = models.TextField(unique=False, blank=False)
 
-    objects =PublicRoomChatMessageManager()
+#     objects =PublicRoomChatMessageManager()
 
-    def __str__(self):
-        return self.content
+#     class Meta:
+#         ordering = ('timestamp',)

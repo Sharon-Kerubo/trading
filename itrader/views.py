@@ -15,6 +15,8 @@ from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.forms import PasswordResetForm
 from django.db.models.query_utils import Q
 import json, psycopg2
+from .models import Message
+from django.utils import timezone
 
 def home(request):
     return render(request, "itrader/home.html")
@@ -26,9 +28,9 @@ def aboutus(request):
     return render(request, "itrader/aboutus.html")
 
 def room(request, room_name):
-  username = request.GET.get('username', 'Anonymous')
-
-  return render(request, 'itrader/room.html', {'room_name': room_name, 'username': username})
+    username = request.GET.get('username', 'Anonymous')
+    messages = Message.objects.filter(room=room_name)
+    return render(request, 'itrader/room.html', {'room_name': room_name, 'username':username, 'messages': messages})
 
 def chat(request):
     return render(request, "itrader/chat.html")

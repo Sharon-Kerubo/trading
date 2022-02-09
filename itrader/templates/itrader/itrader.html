@@ -1,11 +1,10 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en" dir="ltr" class="h-100">
     <head>
         <meta charset="UTF-8">
         <title> iTrader </title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        
         <link rel="stylesheet" type="text/css" href="{% static 'itrader/css/itrader.css' %}">
         <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
         <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
@@ -13,176 +12,164 @@
         <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-balham.css">
             <meta name= "viewport" content="width=device-width, initial-scale=1.0">
     </head>
-<body>
+<body  class="h-100">
 <!-- side Nav Bar -->
-    <div class = "sidebar">
-        <div class="logo_content">
-            <div class="logo">
-                <i class='bx bx-line-chart'></i>
-                <div class="logo_name">iTrader</div>
-            </div>
-            <i class='bx bx-menu' id="btn"></i>
-        </div>
-        <ul class="nav_list">
-            <li>
-                <i class='bx bx-search-alt' ></i>
-                <input type="text" placeholder="Search...">
-                <span class="tooltip">Search...</span>
-            </li> 
-            <li>
-                <a href="#" data-bs-toggle="tooltip" title="Watchlist" >
-                    <i class='bx bx-stopwatch'></i>
-                    <span class="links_name">Watchlist</span>
-                </a>
-                <!-- <span class="tooltip">Watchlist</span> -->
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-grid-alt' ></i>
-                    <span class="links_name">Dashboard</span>
-                </a>
-                <span class="tooltip">Dashboard</span>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-money-withdraw'></i>
-                    <span class="links_name">Portfolio</span>
-                </a>
-                <span class="tooltip">Portfolio</span>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-news' ></i>
-                    <span class="links_name">News</span>
-                </a>
-                <span class="tooltip">News</span>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-message-rounded-dots' ></i>
-                    <span class="links_name">Chat</span>
-                </a>
-                <span class="tooltip">Chat</span>
-            </li>
-        </ul>
-        <div class="profile_content">
-            <div class="profile">
-                <div class="profile_details">
-                    <img src="{% static 'itrader\images\alex-starnes-PK_t0Lrh7MM-unsplash.jpg' %}" alt="">
-                    <div class="name_job">
-                        {% if user.is_authenticated %}
-                        <div class="name">{{ username }}</div>
-                        {% endif %}
+    <div class="container-fluid h-100">
+        <div class="row justify-content-center h-100" style>
+            <div class="col-md-2">
+                <div class = "sidebar">
+                    <div class="logo_content">
+                        <div class="logo">
+                            <i class='bx bx-line-chart'></i>
+                            <div class="logo_name">iTrader</div>
+                        </div>
+                        <i class='bx bx-menu' id="btn"></i>
+                    </div>
+                    <ul class="nav_list">
+                        <li>
+                            <i class='bx bx-search-alt' ></i>
+                            <input type="text" placeholder="Search...">
+                            <span class="tooltip">Search...</span>
+                        </li> 
+                        <li>
+                            <a href="#" data-bs-toggle="tooltip" title="Watchlist" >
+                                <i class='bx bx-stopwatch'></i>
+                                <span class="links_name">Watchlist</span>
+                            </a>
+                            <span class="tooltip">Watchlist</span>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class='bx bx-grid-alt' ></i>
+                                <span class="links_name">Dashboard</span>
+                            </a>
+                            <span class="tooltip">Dashboard</span>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class='bx bx-money-withdraw'></i>
+                                <span class="links_name">Portfolio</span>
+                            </a>
+                            <span class="tooltip">Portfolio</span>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class='bx bx-news' ></i>
+                                <span class="links_name">News</span>
+                            </a>
+                            <span class="tooltip">News</span>
+                        </li>
+                        <li>
+                            <a href="itrader/chat">
+                                <i class='bx bx-message-rounded-dots' ></i>
+                                <span class="links_name">Chat</span>
+                            </a>
+                            <span class="tooltip">Chat</span>
+                        </li>
+                    </ul>
+                    <div class="profile_content">
+                        <div class="profile">
+                            <div class="profile_details">
+                                <img src="{% static 'itrader\images\alex-starnes-PK_t0Lrh7MM-unsplash.jpg' %}" alt="">
+                                <div class="name_job">
+                                    {% if user.is_authenticated %}
+                                    <div class="name">{{ username }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <a href="/logout"><i class='bx bx-log-out' id="log_out"></i></a>
+                        </div>
                     </div>
                 </div>
-                <a href="/logout"><i class='bx bx-log-out' id="log_out"></i></a>
             </div>
-        </div>
-    </div>
-    <div class="home_content">
-        <div class="text">Home Content</div>
-        <div id="myGrid" style="height: 100%; width:100%; position: absolute;" class="ag-theme-balham"></div>
-        <script>
-            const columnDefs = [
-            {headerName: 'Security', field: 'security', sortable:true, filter:true, width: 100},
-            {headerName: 'Last Price', field: 'lastprice', sortable:true, filter:true, width: 100},
-            {headerName: 'Demand Qty', field: 'demandqty', sortable:true, filter:true, width: 100},
-            {headerName: 'Demand Price', field: 'demandprice', sortable:true, filter:true, width: 100},
-            {headerName: 'Supply Price', field: 'supplyprice', sortable:true, filter:true, width: 100},
-            {headerName: 'Supply Qty', field: 'supplyqty', sortable:true, filter:true, width: 100},
-            {headerName: 'Last Qty', field: 'lastqty', sortable:true, filter:true, width: 100},
-            {headerName: 'High', field: 'high', sortable:true, filter:true, width: 100},
-            {headerName: 'Low', field: 'low', sortable:true, filter:true, width: 100},
-        ];
-
-        const gridOptions = {
-            columnDefs: columnDefs,
-            onRowClicked: event => document.querySelector(".buysell").classList.toggle("active"),
-            // enableSorting: true,
-            // enableFilter: true,
-            rowData: JSON.parse('{{ data | safe }}'),
-        };
-
-        document.addEventListener('DOMContentLoaded', () =>  {
-            const eGridDiv = document.querySelector('#myGrid');
-            new agGrid.Grid(eGridDiv, gridOptions);
-        });
-        </script>
-    </div>
-    <!-- Buy and Sell Bar -->
-    <div class="buysell">  
-        <h2 class="buysell-title">Buy/Sell</h2>
-        <!-- content -->
-        <div class="buy-sell-content">
-            <div class="input-field">
-                <label for="clientcode">Client Code:</label>
-                <input type="number" id="clientcode" name="clientcode">
-            </div>
-            <div class="input-field">
-                <label for="type">Type:</label>
-                <input type="radio" id="buy" name="buy" value="buy">
-                <label for="buy">Buy</label>
-                <input type="radio" id="sell" name="sell" value="sell">
-                <label for="sell">Sell</label>
-            </div>
-            <div class="input-field">
-                <label for="security">Security:</label>
-                <input type="text" id="clientcode" name="clientcode">
-            </div>
-            <div class="input-field">
-                <label for="market">Market:</label>
-                <div class="custom-select">
-                    <select>
-                        <option value="etnormal">ET Normal</option>
-                        <option value="etodd">ET ODD</option>
-                    </select>
+            <div class="col-md-7">
+                <div class="home_content">
+                    <div class="text">Home Content</div>
+                    <div id="myGrid" style="height: 100%; width:100%; position: absolute;" class="ag-theme-balham"></div>
+                    <script>
+                        const columnDefs = [
+                        {headerName: 'Security', field: 'security', sortable:true, filter:true, width: 100},
+                        {headerName: 'Last Price', field: 'lastprice', sortable:true, filter:true, width: 100},
+                        {headerName: 'Demand Qty', field: 'demandqty', sortable:true, filter:true, width: 100},
+                        {headerName: 'Demand Price', field: 'demandprice', sortable:true, filter:true, width: 100},
+                        {headerName: 'Supply Price', field: 'supplyprice', sortable:true, filter:true, width: 100},
+                        {headerName: 'Supply Qty', field: 'supplyqty', sortable:true, filter:true, width: 100},
+                        {headerName: 'Last Qty', field: 'lastqty', sortable:true, filter:true, width: 100},
+                        {headerName: 'High', field: 'high', sortable:true, filter:true, width: 100},
+                        {headerName: 'Low', field: 'low', sortable:true, filter:true, width: 100},
+                    ];
+            
+                    const gridOptions = {
+                        columnDefs: columnDefs,
+                        onRowClicked: event => document.querySelector(".buysell").classList.toggle("active"),
+                        // enableSorting: true,
+                        // enableFilter: true,
+                        rowData: JSON.parse('{{ data | safe }}'),
+                    };
+            
+                    document.addEventListener('DOMContentLoaded', () =>  {
+                        const eGridDiv = document.querySelector('#myGrid');
+                        new agGrid.Grid(eGridDiv, gridOptions);
+                    });
+                    </script>
                 </div>
             </div>
-            <div class="input-field">
-                <label for="market">Quantity:</label>
-                <input type="text" id="clientcode" name="clientcode">
-            </div>
-            <div class="input-field">
-                <label for="market">Price:</label>
-                <input type="text" id="clientcode" name="clientcode">
-            </div>
-            <div class="input-field">
-                <label for="market">Valid Upto:</label>
-                <input type="date" id="clientcode" name="clientcode">
-            </div>
-            <div class="input-field">
-                <label for="market">Delivery/Intraday:</label>
-                <input type="text" id="clientcode" name="clientcode">
-            </div>
-            <div class="input-field">
-                <input type="submit" value="Buy" class="btn">
+            <div class="col-3">
+                <div class="buysell">  
+                    <h2 class="buysell-title">Buy/Sell</h2>
+                    <!-- content -->
+                    <div class="buy-sell-content">
+                        <div class="input-field">
+                            <label for="clientcode">Client Code:</label>
+                            <input type="number" id="clientcode" name="clientcode">
+                        </div>
+                        <div class="input-field">
+                            <label for="type">Type:</label>
+                            <input type="radio" id="buy" name="buy" value="buy">
+                            <label for="buy">Buy</label>
+                            <input type="radio" id="sell" name="sell" value="sell">
+                            <label for="sell">Sell</label>
+                        </div>
+                        <div class="input-field">
+                            <label for="security">Security:</label>
+                            <input type="text" id="clientcode" name="clientcode">
+                        </div>
+                        <div class="input-field">
+                            <label for="market">Market:</label>
+                            <div class="custom-select">
+                                <select>
+                                    <option value="etnormal">ET Normal</option>
+                                    <option value="etodd">ET ODD</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-field">
+                            <label for="market">Quantity:</label>
+                            <input type="text" id="clientcode" name="clientcode">
+                        </div>
+                        <div class="input-field">
+                            <label for="market">Price:</label>
+                            <input type="text" id="clientcode" name="clientcode">
+                        </div>
+                        <div class="input-field">
+                            <label for="market">Valid Upto:</label>
+                            <input type="date" id="clientcode" name="clientcode">
+                        </div>
+                        <div class="input-field">
+                            <label for="market">Delivery/Intraday:</label>
+                            <input type="text" id="clientcode" name="clientcode">
+                        </div>
+                        <div class="input-field">
+                            <input type="submit" value="Buy" class="btn">
+                        </div>
+            
+                    </div>
+                </div> 
             </div>
 
-        </div>
-    </div> 
-    
+        </div>    
+    </div>
     <script src="{% static 'itrader/js/script.js' %}"></script>
-    <script>
-        // // Automatically set the focus to the room name input
-        // document.querySelector('#room-name-input').focus();
-
-        // // If you hit "enter" on the keyboard, trigger the click method
-        // document.querySelector('#room-name-input').onkeyup = function(e) {
-        // if (e.keyCode === 13) {
-        //     document.querySelector('#room-name-submit').click();
-        // }
-        // };
-
-        // // When you submit the form, redirect the user to the room page
-        // document.querySelector('#room-name-submit').onclick = function(e) {
-        // var roomName = document.querySelector('#room-name-input').value;
-        // var userName = document.querySelector('#username-input').value;
-
-        // window.location.replace(roomName + '/?username=' + userName);
-        // };
-        var roomName = "General"
-        var userName = "Sharon"
-    </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

@@ -1,0 +1,188 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="UTF-8">
+        <title> iTrader </title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'itrader/css/itrader.css' %}">
+        <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+        <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
+        <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-balham.css">
+            <meta name= "viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+<body>
+<!-- side Nav Bar -->
+  <div class = "sidebar">
+      <div class="logo_content">
+          <div class="logo">
+              <i class='bx bx-line-chart'></i>
+              <div class="logo_name">iTrader</div>
+          </div>
+          <i class='bx bx-menu' id="btn"></i>
+      </div>
+      <ul class="nav_list">
+          <li>
+              <i class='bx bx-search-alt' ></i>
+              <input type="text" placeholder="Search...">
+              <span class="tooltip">Search...</span>
+          </li> 
+          <li>
+              <a href="#" data-bs-toggle="tooltip" title="Watchlist" >
+                  <i class='bx bx-stopwatch'></i>
+                  <span class="links_name">Watchlist</span>
+              </a>
+              <span class="tooltip">Watchlist</span>
+          </li>
+          <li>
+              <a href="#">
+                  <i class='bx bx-grid-alt' ></i>
+                  <span class="links_name">Dashboard</span>
+              </a>
+              <span class="tooltip">Dashboard</span>
+          </li>
+          <li>
+              <a href="#">
+                  <i class='bx bx-money-withdraw'></i>
+                  <span class="links_name">Portfolio</span>
+              </a>
+              <span class="tooltip">Portfolio</span>
+          </li>
+          <li>
+              <a href="#">
+                  <i class='bx bx-news' ></i>
+                  <span class="links_name">News</span>
+              </a>
+              <span class="tooltip">News</span>
+          </li>
+          <li>
+              <a href="#">
+                  <i class='bx bx-message-rounded-dots' ></i>
+                  <span class="links_name">Chat</span>
+              </a>
+              <span class="tooltip">Chat</span>
+          </li>
+      </ul>
+      <div class="profile_content">
+          <div class="profile">
+              <div class="profile_details">
+                  <img src="{% static 'itrader\images\alex-starnes-PK_t0Lrh7MM-unsplash.jpg' %}" alt="">
+                  <div class="name_job">
+                      {% if user.is_authenticated %}
+                      <div class="name">{{ username }}</div>
+                      {% endif %}
+                  </div>
+              </div>
+              <a href="/logout"><i class='bx bx-log-out' id="log_out"></i></a>
+          </div>
+      </div>
+  </div>
+  <div class="home_content">
+    <section class="section">
+      <div class="container" style="width:890px">
+        <div class="columns is-multiline">
+          <!-- <h2 style="padding-top: 20px; padding-bottom: 10px;">{{room}} - {{roomName}}</h2> -->
+            <div class="card mt-3" style="width: 800px;">
+              <div class="card-header">
+                <div class="d-flex flex-row justify-content-between">
+                  <h3 class="card-header">{{room_name}} - {{ username }}</h3>                 
+                  <div class="d-flex flex-row align-items-center">
+                    <i class='bx bxs-user'></i>                 
+                    <!-- <span class="material-icons m-auto pr-1 connected-users-icon">person_outline</span> -->
+                    <span class="m-auto connected-users" id="id_connected_users"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body p-1">     
+                
+                <div id="chat-messages" style="max-height: 300px; overflow-y:scroll;">
+                  {% for m in messages %}
+                  <div class="message" ><b>{{ m.username }}</b><br><p>{{ m.content }}</p><br><span>{{ m.date_added}}</span></div><br>{% endfor %}
+              </div>
+
+              <div class="field">
+                <div class="control">
+                  <input class="input" type="text" placeholder="Message" id="chat-message-input">
+                </div>
+              </div>
+
+              <div class="field">
+                <div class="control">
+                  <a class="button is-info" id="chat-message-submit" style="background: #009688; color:#fff;">Submit</a>
+                </div>
+              </div>
+
+              <!-- <small class="has-text-grey-light">Your username: {{ username }}</small> -->
+            </div>
+          </div>
+      </div>
+    </section>
+  </div>
+  {{ room_name|json_script:"json-roomname" }}
+  {{ username|json_script:"json-username" }}
+  <script>
+    function scrollToBottom() {
+      let objDiv = document.getElementById("chat-messages");
+      objDiv.scrollTop = objDiv.scrollHeight;
+    }
+    scrollToBottom();
+
+    const roomName = JSON.parse(document.getElementById('json-roomname').textContent);
+    const userName = JSON.parse(document.getElementById('json-username').textContent);
+
+    const chatSocket = new WebSocket(
+    'ws://'
+    + window.location.host
+    + '/ws/chat/'
+    + roomName
+    + '/'
+    );
+
+    chatSocket.onmessage = function(e) {
+      const data = JSON.parse(e.data);
+      console.log(data)
+      if (data.message) {
+        document.querySelector('#chat-messages').innerHTML += ("<div class='container darker'><b>" + data.username + "</b><p>" + data.message + "</p><span class='time-left'>"+ data.date_added+ "</span></div>");
+      }else{
+        alert('The message was empty!'); 
+      }
+      scrollToBottom();
+    };
+
+      document.querySelector('#chat-message-input').focus();
+      document.querySelector('#chat-message-input').onkeyup = function(e) {
+        if (e.keyCode === 13) {
+          document.querySelector('#chat-message-submit').click();
+        }
+      };
+
+      document.querySelector('#chat-message-submit').onclick = function(e) {
+        const messageInputDom = document.querySelector('#chat-message-input');
+        const message = messageInputDom.value;
+
+        chatSocket.send(JSON.stringify({
+          'message': message,
+          'username': userName,
+          'room': roomName,
+          'date_added': moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
+        }));
+
+        console.log(JSON.stringify({
+          'message': message,
+          'username': userName,
+          'room': roomName,
+          'date_added': moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
+        }));
+
+        messageInputDom.value = '';
+      };
+  </script>
+  <script src="{% static 'itrader/js/script.js' %}"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
