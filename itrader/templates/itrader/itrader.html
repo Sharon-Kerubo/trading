@@ -16,7 +16,7 @@
 <!-- side Nav Bar -->
     <div class="container-fluid h-100">
         <div class="row justify-content-center h-100" style>
-            <div class="col-md-2">
+            <div class="col-md-9">
                 <div class = "sidebar">
                     <div class="logo_content">
                         <div class="logo">
@@ -32,28 +32,21 @@
                             <span class="tooltip">Search...</span>
                         </li> 
                         <li>
-                            <a href="#" data-bs-toggle="tooltip" title="Watchlist" >
+                            <a href="itrader" data-bs-toggle="tooltip" title="Watchlist" >
                                 <i class='bx bx-stopwatch'></i>
                                 <span class="links_name">Watchlist</span>
                             </a>
                             <span class="tooltip">Watchlist</span>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="itrader/dashboard">
                                 <i class='bx bx-grid-alt' ></i>
                                 <span class="links_name">Dashboard</span>
                             </a>
                             <span class="tooltip">Dashboard</span>
                         </li>
                         <li>
-                            <a href="#">
-                                <i class='bx bx-money-withdraw'></i>
-                                <span class="links_name">Portfolio</span>
-                            </a>
-                            <span class="tooltip">Portfolio</span>
-                        </li>
-                        <li>
-                            <a href="#">
+                            <a href="itrader/news">
                                 <i class='bx bx-news' ></i>
                                 <span class="links_name">News</span>
                             </a>
@@ -65,6 +58,13 @@
                                 <span class="links_name">Chat</span>
                             </a>
                             <span class="tooltip">Chat</span>
+                        </li>
+                        <li>
+                            <a href="itrader/orderhistory">
+                                <i class='bx bx-money-withdraw'></i>
+                                <span class="links_name">Portfolio</span>
+                            </a>
+                            <span class="tooltip">Order History</span> -->
                         </li>
                     </ul>
                     <div class="profile_content">
@@ -81,31 +81,35 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-7">
                 <div class="home_content">
                     <div class="text">Home Content</div>
-                    <div id="myGrid" style="height: 100%; width:100%; position: absolute;" class="ag-theme-balham"></div>
+                    <div id="myGrid" style="height: 90%; width:100%; position: absolute;" class="ag-theme-balham"></div>
                     <script>
                         const columnDefs = [
                         {headerName: 'Security', field: 'security', sortable:true, filter:true, width: 100},
-                        {headerName: 'Last Price', field: 'lastprice', sortable:true, filter:true, width: 100},
-                        {headerName: 'Demand Qty', field: 'demandqty', sortable:true, filter:true, width: 100},
+                        {headerName: 'Last Price', field: 'lastprice', sortable:true, filter:true, width:  100},
+                        {headerName: 'Demand Qty', field: 'demandqty', sortable:true, filter:true, width:  100},
                         {headerName: 'Demand Price', field: 'demandprice', sortable:true, filter:true, width: 100},
                         {headerName: 'Supply Price', field: 'supplyprice', sortable:true, filter:true, width: 100},
-                        {headerName: 'Supply Qty', field: 'supplyqty', sortable:true, filter:true, width: 100},
-                        {headerName: 'Last Qty', field: 'lastqty', sortable:true, filter:true, width: 100},
-                        {headerName: 'High', field: 'high', sortable:true, filter:true, width: 100},
+                        {headerName: 'Supply Qty', field: 'supplyqty', sortable:true, filter:true, width:  100},
+                        {headerName: 'Last Qty', field: 'lastqty', sortable:true, filter:true, width:  100},
+                        {headerName: 'High', field: 'high', sortable:true, filter:true, width:  100},
                         {headerName: 'Low', field: 'low', sortable:true, filter:true, width: 100},
                     ];
             
                     const gridOptions = {
                         columnDefs: columnDefs,
                         onRowClicked: event => document.querySelector(".buysell").classList.toggle("active"),
+
                         // enableSorting: true,
                         // enableFilter: true,
                         rowData: JSON.parse('{{ data | safe }}'),
+                        onFirstDataRendered: onFirstDataRendered,
                     };
+
+                    function onFirstDataRendered(params) {
+                        params.api.sizeColumnsToFit();
+                    }
             
                     document.addEventListener('DOMContentLoaded', () =>  {
                         const eGridDiv = document.querySelector('#myGrid');
@@ -117,6 +121,7 @@
             <div class="col-3">
                 <div class="buysell">  
                     <h2 class="buysell-title">Buy/Sell</h2>
+                    <div class="d-flex flex-row"> <label class="radio mr-1"> <input type="radio" name="add" value="anz" checked> <span> <i class="fa fa-user"></i> Anz CMK </span> </label> <label class="radio"> <input type="radio" name="add" value="add"> <span> <i class="fa fa-plus-circle"></i> Add </span> </label> </div>
                     <!-- content -->
                     <div class="buy-sell-content">
                         <div class="input-field">
@@ -125,9 +130,9 @@
                         </div>
                         <div class="input-field">
                             <label for="type">Type:</label>
-                            <input type="radio" id="buy" name="buy" value="buy">
+                            <input type="radio" id="gridRadios1" name="buy" value="buy">
                             <label for="buy">Buy</label>
-                            <input type="radio" id="sell" name="sell" value="sell">
+                            <input type="radio" id="gridRadios1" name="sell" value="sell">
                             <label for="sell">Sell</label>
                         </div>
                         <div class="input-field">
@@ -160,7 +165,7 @@
                             <input type="text" id="clientcode" name="clientcode">
                         </div>
                         <div class="input-field">
-                            <input type="submit" value="Buy" class="btn">
+                            <input type="submit" value="Buy" class="btn btn-primary">
                         </div>
             
                     </div>

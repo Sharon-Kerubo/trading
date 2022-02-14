@@ -1,7 +1,6 @@
 from django.db import models
 from django.conf import settings
 
-# Create your models here.
 class StockData(models.Model):
     security = models.CharField(max_length=20)
     lastprice= models.IntegerField()

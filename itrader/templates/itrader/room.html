@@ -9,6 +9,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" href="{% static 'itrader/css/itrader.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'itrader/css/room.css' %}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
         <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
         <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
@@ -73,9 +74,9 @@
               <div class="profile_details">
                   <img src="{% static 'itrader\images\alex-starnes-PK_t0Lrh7MM-unsplash.jpg' %}" alt="">
                   <div class="name_job">
-                      {% if user.is_authenticated %}
-                      <div class="name">{{ username }}</div>
-                      {% endif %}
+                      <!-- {% if user.is_authenticated %} -->
+                      <div class="username" id="username">{{ username}}</div>
+                      <!-- {% endif %} -->
                   </div>
               </div>
               <a href="/logout"><i class='bx bx-log-out' id="log_out"></i></a>
@@ -96,27 +97,14 @@
                           <input type="text" class="form-control" placeholder="Search...">
                       </div>
                       <ul class="list-unstyled chat-list mt-2 mb-0">
-                          <li class="clearfix">
-                              <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">
+                          {% for r in rooms %}
+                          <li class="clearfix" id="room-name-submit">
                               <div class="about">
-                                  <div class="name">General</div>
-                                  <div class="status"> <i class="fa fa-circle offline"></i> left 7 mins ago </div>                                            
+                                  <div class="name" >{{ r }}</div>
                               </div>
                           </li>
-                          <li class="clearfix active">
-                              <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
-                              <div class="about">
-                                  <div class="name">Safaricom</div>
-                                  <div class="status"> <i class="fa fa-circle online"></i> online </div>
-                              </div>
-                          </li>
-                          <li class="clearfix">
-                              <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="avatar">
-                              <div class="about">
-                                  <div class="name">Nairobi Business Ventures</div>
-                                  <div class="status"> <i class="fa fa-circle online"></i> online </div>
-                              </div>
-                          </li>                                    
+                          {% endfor %}
+                                   
                       </ul>
                   </div>
                   <div class="chat" style="height:79.5%;">
@@ -124,24 +112,21 @@
                           <div class="row">
                               <div class="col-lg-6">
                                   <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                                      <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
                                   </a>
                                   <div class="chat-about">
-                                      <h6 class="m-b-0">{{ username}}</h6>
-                                      <small>Last seen: 2 hours ago</small>
+                                      <h6 class="m-b-0">{{ roomname}} - {{ username }}</h6>
                                   </div>
                               </div>
                               <div class="col-lg-6 hidden-sm text-right">
                                   <a href="javascript:void(0);" class="btn btn-outline-secondary"><i class="fa fa-camera"></i></a>
                                   <a href="javascript:void(0);" class="btn btn-outline-primary"><i class="fa fa-image"></i></a>
-                                  <a href="javascript:void(0);" class="btn btn-outline-info"><i class="fa fa-cogs"></i></a>
-                                  <a href="javascript:void(0);" class="btn btn-outline-warning"><i class="fa fa-question"></i></a>
                               </div>
                           </div>
                       </div>
                       <div class="chat-history" id="chat-messages" style="height:90%; overflow-y:scroll;">
                         {% for m in messages %}
                           <ul class="m-b-0">
+                              {% if username == m.username %}
                               <li class="clearfix">
                                     <div class="message-data text-right">
                                       <span class="message-data-time">{{ m.username}}</span>
@@ -153,6 +138,7 @@
                                       <span class="message-data-time">{{m.date_added}}</span>
                                     </div>
                               </li>
+                              {% elif %}
                               <li class="clearfix">
                                   <div class="message-data">
                                       <span class="message-data-time">{{ m.username}}</span>
@@ -164,7 +150,8 @@
                                       <span class="message-data-time">{{m.date_added}}</span>
 
                                   </div>                                    
-                              </li>                               
+                              </li>  
+                            {% endif %}                             
                           </ul>
                         {% endfor %}
                       </div>
@@ -183,9 +170,17 @@
       </div>
     </section>
   </div>
-  {{ room_name|json_script:"json-roomname" }}
-  {{ username|json_script:"json-username" }}
-  <script>
+{{ roomname|json_script:"json-roomname" }}
+{{ username|json_script:"json-username" }}
+<script>
+    // jQuery(function(){
+    //     $('div.name').click(function() {
+    //         var roomname = $(this).text();
+    //         var userName =  $(username).text();
+    //         window.location.replace(roomname + '/?username=' + userName);
+    //     })
+    // });
+
     function scrollToBottom() {
       let objDiv = document.getElementById("chat-messages");
       objDiv.scrollTop = objDiv.scrollHeight;
@@ -193,8 +188,8 @@
     scrollToBottom();
 
     const roomName = JSON.parse(document.getElementById('json-roomname').textContent);
-    // const userName = JSON.parse(document.getElementById('json-username').textContent);
-
+    const userName = JSON.parse(document.getElementById('json-username').textContent);
+  
     const chatSocket = new WebSocket(
     'ws://'
     + window.location.host
@@ -229,14 +224,14 @@
 
         chatSocket.send(JSON.stringify({
           'message': message,
-        //   'username': userName,
+          'username': userName,
           'room': roomName,
           'date_added': moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
         }));
 
         console.log(JSON.stringify({
           'message': message,
-        //   'username': userName,
+          'username': userName,
           'room': roomName,
           'date_added': moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
         }));

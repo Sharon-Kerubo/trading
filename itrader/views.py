@@ -15,7 +15,8 @@ from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.forms import PasswordResetForm
 from django.db.models.query_utils import Q
 import json, psycopg2
-from .models import Message
+from .models import Message, Room
+from django.core import serializers
 from django.utils import timezone
 
 def home(request):
@@ -27,13 +28,24 @@ def contactus(request):
 def aboutus(request):
     return render(request, "itrader/aboutus.html")
 
-def room(request, room_name):
-    username = request.GET.get('username', 'Anonymous')
-    messages = Message.objects.filter(room=room_name)
-    return render(request, 'itrader/room.html', {'room_name': room_name, 'username':username, 'messages': messages})
+def dashboard(request):
+    return render(request, "itrader/dashboard.html")
+
+def room(request, roomname):
+    username = None
+    if request.user.is_authenticated:
+        username = request.user.username
+    rooms = Room.objects.all()
+    messages = Message.objects.order_by('room')
+    return render(request, 'itrader/room.html', {'roomname': roomname, 'username':username, 'messages': messages, 'rooms':rooms})
 
 def chat(request):
-    return render(request, "itrader/chat.html")
+    username = None
+    if request.user.is_authenticated:
+        username = request.user.username
+    rooms = Room.objects.all()
+    messages = Message.objects.all()
+    return render(request, "itrader/chat.html", {'username':username, 'rooms':rooms, 'messages': messages})
 
 def signin(request):
     if request.method == "POST":

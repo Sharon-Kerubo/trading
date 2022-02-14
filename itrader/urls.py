@@ -7,11 +7,12 @@ urlpatterns = [
     path('itrader', views.itrader, name='itrader'),
     path('contactus', views.contactus, name='contactus'),
     path('aboutus', views.aboutus, name='aboutus'),
+    path('dashboard', views.dashboard, name='dashboard'),
     path('signup', views.signup, name='signup'),
     path('signin', views.signin, name='signin'),
     path('logout', views.logout, name='logout'),
     path('activate/<slug:uidb64>/<slug:token>/', views.activate, name='activate'),
     path("password_reset", views.password_reset_request, name="password_reset"),
     path('itrader/chat', views.chat, name='chat'),
-    path('itrader/<str:room_name>/', views.room, name='room'),
+    path('itrader/<str:roomname>/', views.room, name='room'),
 ]
