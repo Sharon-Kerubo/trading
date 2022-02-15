@@ -51,6 +51,16 @@ class Room(models.Model):
         # returns the channel name that sockets should subscribe to and get sent messages as they are generated
         return f"PublicChatRoom-{self.id}"
 
+class Trade(models.Model):
+    clientcode = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    buysell =  models.CharField(max_length=20)
+    security =  models.ForeignKey(StockData, on_delete=models.CASCADE)
+    market =  models.CharField(max_length=20)
+    quantity =  models.IntegerField()
+    price =  models.IntegerField()
+    validupto =  models.DateField()
+    delivery = models.CharField(max_length=20)
+
 # class PublicRoomChatMessageManager(models.Manager):
 #     def by_room(self,room):
 #         #return new messages first

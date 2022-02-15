@@ -39,14 +39,14 @@
                             <span class="tooltip">Watchlist</span>
                         </li>
                         <li>
-                            <a href="itrader/dashboard">
+                            <a href="dashboard">
                                 <i class='bx bx-grid-alt' ></i>
                                 <span class="links_name">Dashboard</span>
                             </a>
                             <span class="tooltip">Dashboard</span>
                         </li>
                         <li>
-                            <a href="itrader/news">
+                            <a href="news">
                                 <i class='bx bx-news' ></i>
                                 <span class="links_name">News</span>
                             </a>
@@ -60,11 +60,11 @@
                             <span class="tooltip">Chat</span>
                         </li>
                         <li>
-                            <a href="itrader/orderhistory">
+                            <a href="orderhistory">
                                 <i class='bx bx-money-withdraw'></i>
                                 <span class="links_name">Portfolio</span>
                             </a>
-                            <span class="tooltip">Order History</span> -->
+                            <span class="tooltip">Order History</span>
                         </li>
                     </ul>
                     <div class="profile_content">
@@ -119,56 +119,58 @@
                 </div>
             </div>
             <div class="col-3">
-                <div class="buysell">  
-                    <h2 class="buysell-title">Buy/Sell</h2>
-                    <div class="d-flex flex-row"> <label class="radio mr-1"> <input type="radio" name="add" value="anz" checked> <span> <i class="fa fa-user"></i> Anz CMK </span> </label> <label class="radio"> <input type="radio" name="add" value="add"> <span> <i class="fa fa-plus-circle"></i> Add </span> </label> </div>
-                    <!-- content -->
-                    <div class="buy-sell-content">
-                        <div class="input-field">
-                            <label for="clientcode">Client Code:</label>
-                            <input type="number" id="clientcode" name="clientcode">
-                        </div>
-                        <div class="input-field">
-                            <label for="type">Type:</label>
-                            <input type="radio" id="gridRadios1" name="buy" value="buy">
-                            <label for="buy">Buy</label>
-                            <input type="radio" id="gridRadios1" name="sell" value="sell">
-                            <label for="sell">Sell</label>
-                        </div>
-                        <div class="input-field">
-                            <label for="security">Security:</label>
-                            <input type="text" id="clientcode" name="clientcode">
-                        </div>
-                        <div class="input-field">
-                            <label for="market">Market:</label>
-                            <div class="custom-select">
-                                <select>
-                                    <option value="etnormal">ET Normal</option>
-                                    <option value="etodd">ET ODD</option>
-                                </select>
+                <div class="buysell"> 
+                    <form action="buysell" method="post">
+                    {% csrf_token %}    
+                        <h2 class="buysell-title">Buy/Sell</h2>
+                        <!-- content -->
+                        <div class="buy-sell-content">
+                            <div class="input-field">
+                                <label for="clientcode">Client Code:</label>
+                                <input type="text" id="clientcode" name="clientcode" required>
+                            </div>
+                            <div class="input-field">
+                                <label for="type">Type:</label>
+                                <input type="radio" id="gridRadios1" name="buysell" value="buy">
+                                <label for="buy">Buy</label>
+                                <input type="radio" id="gridRadios1" name="buysell" value="sell">
+                                <label for="sell">Sell</label>
+                            </div>
+                            <div class="input-field">
+                                <label for="security">Security:</label>
+                                <input type="text" id="security" name="security" required>
+                            </div>
+                            <div class="input-field">
+                                <label for="market">Market:</label>
+                                <div class="custom-select">
+                                    <select name="market">
+                                        <option value="ET Normal" >ET Normal</option>
+                                        <option value="ET ODD" >ET ODD</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="input-field">
+                                <label for="quantity">Quantity:</label>
+                                <input type="text" id="quantity" name="quantity">
+                            </div>
+                            <div class="input-field">
+                                <label for="price">Price:</label>
+                                <input type="number" id="clientcode" name="price">
+                            </div>
+                            <div class="input-field">
+                                <label for="validupto">Valid Upto:</label>
+                                <input type="date" id="validupto" name="validupto">
+                            </div>
+                            <div class="input-field">
+                                <label for="delivery">Delivery/Intraday:</label>
+                                <input type="text" id="delivery" name="delivery">
+                            </div>
+                            <div class="input-field">
+                                <input type="submit" value="Buy" class="btn btn-primary">
                             </div>
                         </div>
-                        <div class="input-field">
-                            <label for="market">Quantity:</label>
-                            <input type="text" id="clientcode" name="clientcode">
-                        </div>
-                        <div class="input-field">
-                            <label for="market">Price:</label>
-                            <input type="text" id="clientcode" name="clientcode">
-                        </div>
-                        <div class="input-field">
-                            <label for="market">Valid Upto:</label>
-                            <input type="date" id="clientcode" name="clientcode">
-                        </div>
-                        <div class="input-field">
-                            <label for="market">Delivery/Intraday:</label>
-                            <input type="text" id="clientcode" name="clientcode">
-                        </div>
-                        <div class="input-field">
-                            <input type="submit" value="Buy" class="btn btn-primary">
-                        </div>
-            
-                    </div>
+                    </form> 
+                    
                 </div> 
             </div>
 

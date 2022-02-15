@@ -15,9 +15,8 @@ from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.forms import PasswordResetForm
 from django.db.models.query_utils import Q
 import json, psycopg2
-from .models import Message, Room
-from django.core import serializers
-from django.utils import timezone
+from .models import Message, Room, Trade
+
 
 def home(request):
     return render(request, "itrader/home.html")
@@ -46,6 +45,22 @@ def chat(request):
     rooms = Room.objects.all()
     messages = Message.objects.all()
     return render(request, "itrader/chat.html", {'username':username, 'rooms':rooms, 'messages': messages})
+
+def buysell(request):
+    if request.method == "POST":
+        clientcode = request.POST['clientcode']
+        buysell = request.POST['buysell']
+        security = request.POST['security']
+        market = request.POST['market']
+        quantity = request.POST['quantity']
+        price = request.POST['price']
+        validupto = request.POST['validupto']
+        delivery = request.POST['delivery']
+
+        trade = Trade.objects.create(clientcode=clientcode, buysell=buysell, security=security, market=market, quantity=quantity,price=price,validupto=validupto,delivery=delivery)
+        trade.save()
+        return render(request, "itrader/itrader.html")
+
 
 def signin(request):
     if request.method == "POST":
