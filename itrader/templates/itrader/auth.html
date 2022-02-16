@@ -43,7 +43,7 @@
             <div class="form-content">
                 <div class="login-form">
                     <div class="title">Sign In</div>
-                <form action="/signin" method="post">
+                <form action="{% url 'itrader:signin' %}" method="post">
                 {% csrf_token %}
                     <div class="input-boxes">
                         <div class="input-box">

@@ -83,51 +83,21 @@
                 </div>
                 <div class="home_content">
                     <div class="text">Home Content</div>
-                    <div id="myGrid" style="height: 90%; width:100%; position: absolute;" class="ag-theme-balham"></div>
-                    <script>
-                        const columnDefs = [
-                        {headerName: 'Security', field: 'security', sortable:true, filter:true, width: 100},
-                        {headerName: 'Last Price', field: 'lastprice', sortable:true, filter:true, width:  100},
-                        {headerName: 'Demand Qty', field: 'demandqty', sortable:true, filter:true, width:  100},
-                        {headerName: 'Demand Price', field: 'demandprice', sortable:true, filter:true, width: 100},
-                        {headerName: 'Supply Price', field: 'supplyprice', sortable:true, filter:true, width: 100},
-                        {headerName: 'Supply Qty', field: 'supplyqty', sortable:true, filter:true, width:  100},
-                        {headerName: 'Last Qty', field: 'lastqty', sortable:true, filter:true, width:  100},
-                        {headerName: 'High', field: 'high', sortable:true, filter:true, width:  100},
-                        {headerName: 'Low', field: 'low', sortable:true, filter:true, width: 100},
-                    ];
-            
-                    const gridOptions = {
-                        columnDefs: columnDefs,
-                        onRowClicked: event => document.querySelector(".buysell").classList.toggle("active"),
-
-                        // enableSorting: true,
-                        // enableFilter: true,
-                        rowData: JSON.parse('{{ data | safe }}'),
-                        onFirstDataRendered: onFirstDataRendered,
-                    };
-
-                    function onFirstDataRendered(params) {
-                        params.api.sizeColumnsToFit();
-                    }
-            
-                    document.addEventListener('DOMContentLoaded', () =>  {
-                        const eGridDiv = document.querySelector('#myGrid');
-                        new agGrid.Grid(eGridDiv, gridOptions);
-                    });
-                    </script>
+                    <div id="myGrid" style="height: 90%; width:100%; position: absolute;" class="ag-theme-balham"></div>     
                 </div>
             </div>
             <div class="col-3">
                 <div class="buysell"> 
                     <form action="buysell" method="post">
-                    {% csrf_token %}    
+                    {% csrf_token %}   
+                  
+                        <span id="selectedRows"></span>
                         <h2 class="buysell-title">Buy/Sell</h2>
                         <!-- content -->
                         <div class="buy-sell-content">
                             <div class="input-field">
                                 <label for="clientcode">Client Code:</label>
-                                <input type="text" id="clientcode" name="clientcode" required>
+                                <input type="text" id="clientcode"  name="clientcode" value="{{username}}" required>
                             </div>
                             <div class="input-field">
                                 <label for="type">Type:</label>
@@ -142,12 +112,10 @@
                             </div>
                             <div class="input-field">
                                 <label for="market">Market:</label>
-                                <div class="custom-select">
-                                    <select name="market">
-                                        <option value="ET Normal" >ET Normal</option>
-                                        <option value="ET ODD" >ET ODD</option>
-                                    </select>
-                                </div>
+                                <select name="market">
+                                    <option value="ET Normal" >ET Normal</option>
+                                    <option value="ET ODD" >ET ODD</option>
+                                </select>
                             </div>
                             <div class="input-field">
                                 <label for="quantity">Quantity:</label>
@@ -163,7 +131,10 @@
                             </div>
                             <div class="input-field">
                                 <label for="delivery">Delivery/Intraday:</label>
-                                <input type="text" id="delivery" name="delivery">
+                                <select name="delivery">
+                                    <option value="Delivery" >Delivery</option>
+                                    <option value="Intraday" >Intraday</option>
+                                </select>
                             </div>
                             <div class="input-field">
                                 <input type="submit" value="Buy" class="btn btn-primary">
@@ -176,6 +147,52 @@
 
         </div>    
     </div>
+    {{ username|json_script:"json-username" }}
+    <script>
+        const columnDefs = [
+        {headerName: 'Security', field: 'security', sortable:true, filter:true, width: 100},
+        {headerName: 'Last Price', field: 'lastprice', sortable:true, filter:true, width:  100},
+        {headerName: 'Demand Qty', field: 'demandqty', sortable:true, filter:true, width:  100},
+        {headerName: 'Demand Price', field: 'demandprice', sortable:true, filter:true, width: 100},
+        {headerName: 'Supply Price', field: 'supplyprice', sortable:true, filter:true, width: 100},
+        {headerName: 'Supply Qty', field: 'supplyqty', sortable:true, filter:true, width:  100},
+        {headerName: 'Last Qty', field: 'lastqty', sortable:true, filter:true, width:  100},
+        {headerName: 'High', field: 'high', sortable:true, filter:true, width:  100},
+        {headerName: 'Low', field: 'low', sortable:true, filter:true, width: 100},
+    ];
+
+    const gridOptions = {
+        columnDefs: columnDefs,
+        rowSelection: 'single',
+        onRowClicked: event => document.querySelector(".buysell").classList.toggle("active"),
+
+        // enableSorting: true,
+        // enableFilter: true,
+        rowData: JSON.parse('{{ data | safe }}'),
+        onFirstDataRendered: onFirstDataRendered,
+        onSelectionChanged: onSelectionChanged,
+    };
+    const userName = JSON.parse(document.getElementById('json-username').textContent);
+    document.getElementById("clientcode").value = userName;
+
+    function onSelectionChanged() {
+        const selectedRows = gridOptions.api.getSelectedRows();
+        const selectedsec  =selectedRows.length === 1 ? selectedRows[0].security : ''; 
+        document.getElementById("security").value = selectedsec;
+        document.querySelector('#selectedRows').innerHTML =
+            selectedsec;
+    }
+   
+
+    function onFirstDataRendered(params) {
+        params.api.sizeColumnsToFit();
+    }
+
+    document.addEventListener('DOMContentLoaded', () =>  {
+        const eGridDiv = document.querySelector('#myGrid');
+        new agGrid.Grid(eGridDiv, gridOptions);
+    });
+    </script>
     <script src="{% static 'itrader/js/script.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

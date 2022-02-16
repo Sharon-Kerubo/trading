@@ -88,8 +88,8 @@
             <i class='bx bx-search' ></i>
         </div>
         <div class="profile-details">
-            <!--<img src="images/profile.jpg" alt="">-->
-            <span class="admin_name">sharon</span>
+            <img src="images/profile.jpg" alt="">
+            <span class="admin_name">{{ username}}</span>
             <i class='bx bx-chevron-down' ></i>
         </div>
         </nav>
@@ -143,29 +143,36 @@
         </div>
 
         <div class="sales-boxes">
+            
             <div class="recent-sales box">
             <div class="title">Active Orders</div>
             <div class="sales-details">
+                {% for trades in activetrades %}
                 <ul class="details">
                 <li class="topic">Date</li>
-                <li><a href="#">02 Jan 2021</a></li>
-
+                <li><a href="#">{{ trades.dateplaced}}</a></li>
                 </ul>
                 <ul class="details">
                 <li class="topic">Security</li>
-                <li><a href="#">Safaricom</a></li>
-
-            </ul>
-            <ul class="details">
-                <li class="topic">Amount</li>
-                <li><a href="#">45000</a></li>
-
-            </ul>
-            <ul class="details">
-                <li class="topic">Profit/Loss</li>
-                <li><a href="#">+3.68</a></li>
-    
-            </ul>
+                <li><a href="#">{{ trades.security}}</a></li>
+                </ul>
+                <ul class="details">
+                    <li class="topic">Buy/Sell</li>
+                    <li><a href="#">{{ trades.buysell}}</a></li>
+                </ul>
+                <ul class="details">
+                    <li class="topic">Quantity</li>
+                    <li><a href="#">{{ trades.quantity}}</a></li>
+                </ul>
+                <ul class="details">
+                    <li class="topic">Price</li>
+                    <li><a href="#">{{ trades.price}}</a></li>
+                </ul>
+                <ul class="details">
+                    <li class="topic">Profit</li>
+                    <li><a href="#">{{ trades.price}}</a></li>
+                </ul>
+                {% endfor %}
             </div>
             <div class="button">
                 <a href="#">See All</a>

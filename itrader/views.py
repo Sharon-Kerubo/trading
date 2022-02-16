@@ -15,7 +15,8 @@ from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.forms import PasswordResetForm
 from django.db.models.query_utils import Q
 import json, psycopg2
-from .models import Message, Room, Trade
+from .models import Message, Room, StockData, Trade
+from django.contrib.auth.models import User
 
 
 def home(request):
@@ -28,7 +29,11 @@ def aboutus(request):
     return render(request, "itrader/aboutus.html")
 
 def dashboard(request):
-    return render(request, "itrader/dashboard.html")
+    username = None
+    if request.user.is_authenticated:
+        username = request.user.username
+    activetrades = Trade.objects.all()
+    return render(request, "itrader/dashboard.html", {'username':username, 'activetrades':activetrades})
 
 def room(request, roomname):
     username = None
@@ -48,7 +53,7 @@ def chat(request):
 
 def buysell(request):
     if request.method == "POST":
-        clientcode = request.POST['clientcode']
+        username = request.POST['clientcode']
         buysell = request.POST['buysell']
         security = request.POST['security']
         market = request.POST['market']
@@ -57,7 +62,7 @@ def buysell(request):
         validupto = request.POST['validupto']
         delivery = request.POST['delivery']
 
-        trade = Trade.objects.create(clientcode=clientcode, buysell=buysell, security=security, market=market, quantity=quantity,price=price,validupto=validupto,delivery=delivery)
+        trade = Trade.objects.create(clientcode=User.objects.get(username= username), buysell=buysell, security=StockData.objects.get(security=security), market=market, quantity=quantity,price=price,validupto=validupto,delivery=delivery)
         trade.save()
         return render(request, "itrader/itrader.html")
 
@@ -71,7 +76,7 @@ def signin(request):
         
         if user is not None:
             login(request, user)
-            return render(request, "itrader/itrader.html", {'username':username}) 
+            return redirect('/itrader') 
         else: 
             messages.error(request, "Invalid Login")
     return render(request,  "itrader/auth.html")
@@ -179,6 +184,9 @@ def password_reset_request(request):
     return render(request=request, template_name="itrader/password/password_reset.html", context={"password_reset_form":password_reset_form})
 
 def itrader(request):
+    username = None
+    if request.user.is_authenticated:
+        username = request.user.username
     try:
         #connect to the db
         con = psycopg2.connect(
@@ -198,9 +206,7 @@ def itrader(request):
         data = json.dumps(data[0])
         #close cursor
         cur.close()  
-        return render(request, 
-                  "itrader/itrader.html", 
-                  context={'data': data})
+        return render(request, "itrader/itrader.html",  {'data': data, 'username':username})
     except:
        return ('Error Connecting') 
     finally:

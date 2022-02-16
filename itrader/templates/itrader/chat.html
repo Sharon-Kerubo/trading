@@ -175,62 +175,6 @@
             window.location.replace(roomname + '/?username=' + userName);
         })
     });
-
-    // function scrollToBottom() {
-    //   let objDiv = document.getElementById("chat-messages");
-    //   objDiv.scrollTop = objDiv.scrollHeight;
-    // }
-    // scrollToBottom();
-
-  
-    // const chatSocket = new WebSocket(
-    // 'ws://'
-    // + window.location.host
-    // + '/ws/chat/'
-    // + roomName
-    // + '/'
-    // );
-
-    // chatSocket.onmessage = function(e) {
-    //   const data = JSON.parse(e.data);
-    //   console.log(data)
-    //   if (data.message) {
-    //     document.querySelector('#chat-messages').innerHTML += 
-    //     ("<ul class='m-b-0'> <li class='clearfix'><div class='message-data text-right'><span class='message-data-time'>" + data.date_added +"</span><img src='https://bootdey.com/img/Content/avatar/avatar7.png' alt='avatar'></div><div class='message other-message float-right'>" + data.message + "</div></li>");
-    //     // ("<div class='container darker'><b>" + data.username + "</b><p>" + data.message + "</p><span class='time-left'>"+ data.date_added+ "</span></div>");
-    //   }else{
-    //     alert('The message was empty!'); 
-    //   }
-    //   scrollToBottom();
-    // };
-
-    //   document.querySelector('#chat-message-input').focus();
-    //   document.querySelector('#chat-message-input').onkeyup = function(e) {
-    //     if (e.keyCode === 13) {
-    //       document.querySelector('#chat-message-submit').click();
-    //     }
-    //   };
-
-    //   document.querySelector('#chat-message-submit').onclick = function(e) {
-    //     const messageInputDom = document.querySelector('#chat-message-input');
-    //     const message = messageInputDom.value;
-
-    //     chatSocket.send(JSON.stringify({
-    //       'message': message,
-    //       'username': username,
-    //       'room': roomname,
-    //       'date_added': moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
-    //     }));
-
-    //     console.log(JSON.stringify({
-    //       'message': message,
-    //       'username': username,
-    //       'room': roomName,
-    //       'date_added': moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
-    //     }));
-
-    //     messageInputDom.value = '';
-    //   };
   </script>
   <script src="{% static 'itrader/js/script.js' %}"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

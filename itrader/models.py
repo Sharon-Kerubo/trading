@@ -2,7 +2,7 @@ from django.db import models
 from django.conf import settings
 
 class StockData(models.Model):
-    security = models.CharField(max_length=20)
+    security = models.CharField(max_length=20, unique=True)
     lastprice= models.IntegerField()
     demandqty= models.IntegerField()
     demandprice= models.IntegerField()
@@ -51,6 +51,8 @@ class Room(models.Model):
         # returns the channel name that sockets should subscribe to and get sent messages as they are generated
         return f"PublicChatRoom-{self.id}"
 
+
+
 class Trade(models.Model):
     clientcode = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     buysell =  models.CharField(max_length=20)
@@ -60,6 +62,14 @@ class Trade(models.Model):
     price =  models.IntegerField()
     validupto =  models.DateField()
     delivery = models.CharField(max_length=20)
+    dateplaced = models.DateTimeField(auto_now_add=True)
+
+# def get_default_category():
+#     # get_or_create returns a tuple and we will only need the first value, which is the object
+#     return Package_Category.objects.get_or_create(name="Free")[0]
+
+# package_category = models.ForeignKey(Package_Category, on_delete=models.DO_NOTHING, verbose_name="Package Category", null=True, default=get_default_category)
+
 
 # class PublicRoomChatMessageManager(models.Manager):
 #     def by_room(self,room):
