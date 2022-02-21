@@ -96,16 +96,16 @@
                           </div>
                           <input type="text" class="form-control" placeholder="Search...">
                       </div>
-                      <ul class="list-unstyled chat-list mt-2 mb-0">
-                          {% for r in rooms %}
-                          <li class="clearfix" id="room-name-submit">
-                              <div class="about">
-                                  <div class="name" >{{ r }}</div>
-                              </div>
-                          </li>
-                          {% endfor %}
-                                   
-                      </ul>
+                      <ul class="list-unstyled chat-list mt-2 mb-0" style="overflow: auto; height:600px;">
+                        {% for r in rooms %}
+                        <li class="clearfix" id="room-name-submit">
+                            <div class="about">
+                                <div class="name" >{{ r.security }}</div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                                 
+                    </ul>
                   </div>
                   <div class="chat" style="height:79.5%;">
                       <div class="chat-header clearfix">
@@ -124,8 +124,8 @@
                           </div>
                       </div>
                       <div class="chat-history" id="chat-messages" style="height:90%; overflow-y:scroll;">
+                        <ul class="m-b-0">
                         {% for m in messages %}
-                          <ul class="m-b-0">
                               {% if username == m.username %}
                               <li class="clearfix">
                                     <div class="message-data text-right">
@@ -152,8 +152,8 @@
                                   </div>                                    
                               </li>  
                             {% endif %}                             
-                          </ul>
                         {% endfor %}
+                        </ul>
                       </div>
                       <div class="chat-message clearfix">
                           <div class="input-group mb-0">
@@ -173,14 +173,6 @@
 {{ roomname|json_script:"json-roomname" }}
 {{ username|json_script:"json-username" }}
 <script>
-    // jQuery(function(){
-    //     $('div.name').click(function() {
-    //         var roomname = $(this).text();
-    //         var userName =  $(username).text();
-    //         window.location.replace(roomname + '/?username=' + userName);
-    //     })
-    // });
-
     function scrollToBottom() {
       let objDiv = document.getElementById("chat-messages");
       objDiv.scrollTop = objDiv.scrollHeight;
@@ -203,8 +195,9 @@
       console.log(data)
       if (data.message) {
         document.querySelector('#chat-messages').innerHTML += 
-        ("<ul class='m-b-0'> <li class='clearfix'><div class='message-data text-right'><span class='message-data-time'>" + data.date_added +"</span><img src='https://bootdey.com/img/Content/avatar/avatar7.png' alt='avatar'></div><div class='message other-message float-right'>" + data.message + "</div></li>");
+        ("<li class='clearfix'><div class='message-data text-right'><span class='message-data-time'>" + data.username +"</span><img src='https://bootdey.com/img/Content/avatar/avatar7.png' alt='avatar'></div><div class='message other-message float-right'>" + data.message + "<br> <span class='message-data-time'>" +data.date_added+"</span></div></li>");
         // ("<div class='container darker'><b>" + data.username + "</b><p>" + data.message + "</p><span class='time-left'>"+ data.date_added+ "</span></div>");
+
       }else{
         alert('The message was empty!'); 
       }

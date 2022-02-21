@@ -22,7 +22,8 @@ class Message(models.Model):
         ordering = ('date_added',)
 
 class Room(models.Model):
-    title = models.CharField(max_length=255, unique=True, blank=False,)
+    # title = models.CharField(max_length=255, unique=True, blank=False,)
+    title = models.ForeignKey(StockData, on_delete=models.CASCADE)
     users = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, help_text="users who are connected to the chat")
 
     def __str__(self):

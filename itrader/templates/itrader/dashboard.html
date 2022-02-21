@@ -146,33 +146,44 @@
             
             <div class="recent-sales box">
             <div class="title">Active Orders</div>
-            <div class="sales-details">
-                {% for trades in activetrades %}
+            <div class="sales-details">    
                 <ul class="details">
-                <li class="topic">Date</li>
-                <li><a href="#">{{ trades.dateplaced}}</a></li>
+                    <li class="topic">Date</li>
+                    {% for trades in activetrades %}
+                    <li><a href="#">{{ trades.dateplaced}}</a></li>
+                    {% endfor %}
                 </ul>
                 <ul class="details">
-                <li class="topic">Security</li>
-                <li><a href="#">{{ trades.security}}</a></li>
+                    <li class="topic">Security</li>
+                    {% for trades in activetrades %}
+                    <li><a href="#">{{ trades.security.security}}</a></li>
+                    {% endfor %}
                 </ul>
                 <ul class="details">
                     <li class="topic">Buy/Sell</li>
+                    {% for trades in activetrades %}
                     <li><a href="#">{{ trades.buysell}}</a></li>
+                    {% endfor %}
                 </ul>
                 <ul class="details">
                     <li class="topic">Quantity</li>
+                    {% for trades in activetrades %}
                     <li><a href="#">{{ trades.quantity}}</a></li>
+                    {% endfor %}
                 </ul>
                 <ul class="details">
                     <li class="topic">Price</li>
+                    {% for trades in activetrades %}
                     <li><a href="#">{{ trades.price}}</a></li>
+                    {% endfor %}
                 </ul>
                 <ul class="details">
                     <li class="topic">Profit</li>
+                    {% for trades in activetrades %}
                     <li><a href="#">{{ trades.price}}</a></li>
+                    {% endfor %}
                 </ul>
-                {% endfor %}
+                
             </div>
             <div class="button">
                 <a href="#">See All</a>
@@ -184,10 +195,13 @@
             <li>
                 <a href="#">
                 <!--<img src="images/sunglasses.jpg" alt="">-->
-                <span class="product">Safaricom</span>
+                <span class="product">BBK</span>
                 </a>
                 <span class="price">+3.68</span>
             </li>
+            <div class="graph">
+
+            </div>
             </ul>
             </div>
         </div>

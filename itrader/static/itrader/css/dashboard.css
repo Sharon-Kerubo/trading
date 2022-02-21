@@ -346,6 +346,9 @@ nav .profile-details i{
   font-weight: 400;
   color: #333;
 }
+/* .graph{
+  background: url('/static/itrader/images/pexels-photo-1229861.jpeg')
+} */
 /* Responsive Media Query */
 @media (max-width: 1240px) {
   .sidebar{

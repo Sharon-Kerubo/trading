@@ -96,11 +96,11 @@
                           </div>
                           <input type="text" class="form-control" placeholder="Search...">
                       </div>
-                      <ul class="list-unstyled chat-list mt-2 mb-0">
+                      <ul class="list-unstyled chat-list mt-2 mb-0" style="overflow: auto; height:600px;">
                           {% for r in rooms %}
                           <li class="clearfix" id="room-name-submit">
                               <div class="about">
-                                  <div class="name" >{{ r }}</div>
+                                  <div class="name" >{{ r.security }}</div>
                               </div>
                           </li>
                           {% endfor %}

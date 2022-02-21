@@ -39,7 +39,7 @@ def room(request, roomname):
     username = None
     if request.user.is_authenticated:
         username = request.user.username
-    rooms = Room.objects.all()
+    rooms = StockData.objects.all()
     messages = Message.objects.order_by('room')
     return render(request, 'itrader/room.html', {'roomname': roomname, 'username':username, 'messages': messages, 'rooms':rooms})
 
@@ -47,7 +47,7 @@ def chat(request):
     username = None
     if request.user.is_authenticated:
         username = request.user.username
-    rooms = Room.objects.all()
+    rooms = StockData.objects.all()
     messages = Message.objects.all()
     return render(request, "itrader/chat.html", {'username':username, 'rooms':rooms, 'messages': messages})
 
