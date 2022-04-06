@@ -15,7 +15,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.forms import PasswordResetForm
 from django.db.models.query_utils import Q
 import json, psycopg2
-from .models import Message, Room, StockData, Trade
+from .models import Message, Room, StockData, Trade, News
 from django.contrib.auth.models import User
 
 
@@ -27,6 +27,10 @@ def contactus(request):
 
 def aboutus(request):
     return render(request, "itrader/aboutus.html")
+
+def news(request):
+    news_articles = News.objects.order_by('date')[:5]
+    return render(request, 'itrader/news.html', {'news_articles': news_articles})
 
 def dashboard(request):
     username = None
@@ -191,7 +195,7 @@ def itrader(request):
         #connect to the db
         con = psycopg2.connect(
             host = 'localhost',
-            database = 'itrader',
+            database = 'trading',
             user = 'postgres',
             password = 'postgres',
             port = 5432

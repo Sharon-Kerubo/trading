@@ -1,0 +1,140 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="UTF-8">
+        <title> iTrader </title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'itrader/css/itrader.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'itrader/css/room.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'itrader/css/news.css' %}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+        <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
+        <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-balham.css">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+            <meta name= "viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+<body>
+<!-- side Nav Bar -->
+<div class = "sidebar">
+    <div class="logo_content">
+        <div class="logo">
+            <i class='bx bx-line-chart'></i>
+            <div class="logo_name">iTrader</div>
+        </div>
+        <i class='bx bx-menu' id="btn"></i>
+    </div>
+    <ul class="nav_list">
+        <li>
+            <i class='bx bx-search-alt' ></i>
+            <input type="text" placeholder="Search...">
+            <span class="tooltip">Search...</span>
+        </li> 
+        <li>
+            <a href="itrader" data-bs-toggle="tooltip" title="Watchlist" >
+                <i class='bx bx-stopwatch'></i>
+                <span class="links_name">Watchlist</span>
+            </a>
+            <span class="tooltip">Watchlist</span>
+        </li>
+        <li>
+            <a href="dashboard">
+                <i class='bx bx-grid-alt' ></i>
+                <span class="links_name">Dashboard</span>
+            </a>
+            <span class="tooltip">Dashboard</span>
+        </li>
+        <li>
+            <a href="news">
+                <i class='bx bx-news' ></i>
+                <span class="links_name">News</span>
+            </a>
+            <span class="tooltip">News</span>
+        </li>
+        <li>
+            <a href="itrader/chat">
+                <i class='bx bx-message-rounded-dots' ></i>
+                <span class="links_name">Chat</span>
+            </a>
+            <span class="tooltip">Chat</span>
+        </li>
+        <li>
+            <a href="orderhistory">
+                <i class='bx bx-money-withdraw'></i>
+                <span class="links_name">Portfolio</span>
+            </a>
+            <span class="tooltip">Order History</span>
+        </li>
+    </ul>
+      <div class="profile_content">
+          <div class="profile">
+              <div class="profile_details">
+                  <img src="{% static 'itrader\images\alex-starnes-PK_t0Lrh7MM-unsplash.jpg' %}" alt="">
+                  <div class="name_job">
+                      <!-- {% if user.is_authenticated %} -->
+                      <div class="username" id="username">{{ username}}</div>
+                      <!-- {% endif %} -->
+                  </div>
+              </div>
+              <a href="/logout"><i class='bx bx-log-out' id="log_out"></i></a>
+          </div>
+      </div>
+  </div>
+  <!-- Content -->
+  <div class="home_content">
+      <div class="news-content clearfix">
+          <div class="main-content-news">
+              <h1 class="recent-news-articles">Recent News</h1>
+              {% if news_articles %}
+              {% for news in news_articles %}
+              <div class="news">
+                <img src="/static/itrader/images/pexels-photo-1229861.jpeg" alt="" class="news-image">
+                  <div class="news-review">                  
+                      <h2><a href="{{news.link}}">{{news.title}}</a></h2>
+                      <i class='bx bxs-user-badge'></i>
+                      &nbsp;
+                      <i class='bx bxs-calendar-alt'>{{news.date}}</i>
+                      <p class="preview-text">{{news.title}}</p>
+                      <a href="{{news.link}}" class="btn-news read-more">Read More</a>
+                  </div>
+              </div>
+              {% endfor%}
+              {% else %}
+                <p>No News Available</p>
+             {% endif %}
+          </div>
+          <div class="sidenews">
+              <div class="section-news search">
+                  <h2 class="section-news-titles"></h2>
+                  <form action="news.html" method="post">
+                      <input type="text" name="search" class="text-input" placeholder="Search...">
+                  </form>
+              </div>
+              <div class="section-news topics">
+                  <h2 class="section-news title">Topics</h2>
+                  <ul>
+                      <li><a href="#">Safaricom</a></li>
+                      <li><a href="#">Safaricom</a></li>
+                      <li><a href="#">Safaricom</a></li>
+                      <li><a href="#">Safaricom</a></li>
+                      <li><a href="#">Safaricom</a></li>
+                      <li><a href="#">Safaricom</a></li>
+                      <li><a href="#">Safaricom</a></li>
+                  </ul>
+
+              </div>
+
+          </div>
+      </div>
+  </div>
+  <!-- Content -->
+<script src="{% static 'itrader/js/script.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

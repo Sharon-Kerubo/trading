@@ -11,6 +11,15 @@
         <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
         <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
         <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-balham.css">
+        <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-core.min.js"></script>
+        <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-stock.min.js"></script>
+        <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-data-adapter.min.js"></script>
+
+        <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-ui.min.js"></script>
+        <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-exports.min.js"></script>
+
+        <link href="https://cdn.anychart.com/releases/8.11.0/css/anychart-ui.min.css" type="text/css" rel="stylesheet">
+        <link href="https://cdn.anychart.com/releases/8.11.0/fonts/css/anychart-font.min.css" type="text/css" rel="stylesheet">   
             <meta name= "viewport" content="width=device-width, initial-scale=1.0">
 <body>
     <div class = "sidebar">
@@ -195,18 +204,77 @@
             <li>
                 <a href="#">
                 <!--<img src="images/sunglasses.jpg" alt="">-->
-                <span class="product">BBK</span>
+                <span class="product">SCOM</span>
                 </a>
                 <span class="price">+3.68</span>
             </li>
-            <div class="graph">
-
+            <div id="container" style="height:50vh; width:70vh">
             </div>
             </ul>
             </div>
         </div>
         </div>
     </section>
+<script>
+anychart.onDocumentReady(function () {
+  anychart.data.loadCsvFile(
+    'https://gist.githubusercontent.com/shacheeswadia/cd509e0b0c03964ca86ae7d894137043/raw/5f336c644ad61728dbac93026f3268b86b8d0680/teslaDailyData.csv',
+    function (data) {
+      // create data table on loaded data
+      var dataTable = anychart.data.table();
+      dataTable.addData(data);
+
+      // map loaded data for the candlestick series
+      var mapping = dataTable.mapAs({
+        open: 1,
+        high: 2,
+        low: 3,
+        close: 4
+      });
+
+      // create stock chart
+      var chart = anychart.stock();
+
+      // create first plot on the chart
+      var plot = chart.plot(0);
+      
+      // set grid settings
+      plot.yGrid(true).xGrid(true).yMinorGrid(true).xMinorGrid(true);
+
+      var series = plot.candlestick(mapping)
+        .name('Safaricom');
+      series.legendItem().iconType('rising-falling');
+
+      // create scroller series with mapped data
+      chart.scroller().candlestick(mapping);
+
+      // set chart selected date/time range
+      chart.selectRange('2020-11-27', '2021-11-26');
+
+      // create range picker
+      var rangePicker = anychart.ui.rangePicker();
+      
+      // init range picker
+      rangePicker.render(chart);
+
+      // create range selector
+      var rangeSelector = anychart.ui.rangeSelector();
+      
+      // init range selector
+      rangeSelector.render(chart);
+      
+      // sets the title of the chart
+      chart.title('Safaricom PLC. Stock Chart');
+      
+      // set container id for the chart
+      chart.container('container');
+      
+      // initiate chart drawing
+      chart.draw();
+    }
+  );
+});
+</script>
 
 <script src="{% static 'itrader/js/script.js' %}"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

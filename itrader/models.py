@@ -1,5 +1,7 @@
 from django.db import models
 from django.conf import settings
+import os
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "trading.settings")
 
 class StockData(models.Model):
     security = models.CharField(max_length=20, unique=True)
@@ -64,6 +66,13 @@ class Trade(models.Model):
     validupto =  models.DateField()
     delivery = models.CharField(max_length=20)
     dateplaced = models.DateTimeField(auto_now_add=True)
+
+class News(models.Model):
+    title = models.CharField(max_length=200)
+    link = models.CharField(max_length=200)
+    content =  models.TextField()
+    date = models.CharField(max_length=200)
+
 
 # def get_default_category():
 #     # get_or_create returns a tuple and we will only need the first value, which is the object

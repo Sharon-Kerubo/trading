@@ -1,0 +1,108 @@
+.cleafix::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+.btn-news {
+    padding: .5rem 1rem;
+    background: #006669;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+}
+.btn-news:hover{
+    color: white !important;
+    background: #005255 ;
+}
+.news-content{
+    width: 90%;
+    margin: 30px auto 30px;
+    border: 1px solid red;
+}
+.news-content .main-content-news{
+    width: 70%;
+    height: 90vh;
+    overflow: auto;
+    float: left;
+    border: 1px solid blue;
+}
+.news-content .main-content-news .news{
+    width: 95%;
+    height: 270px;
+    margin: 20px auto;
+    border-radius: 5px;
+    background: white;
+    position: relative;
+}
+.news-content .main-content-news .news .read-more{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    border: 1px solid #006669;
+    background: transparent;
+    border-radius: 0px;
+    color: #006669 !important;
+}
+.news-content .main-content-news .news .read-more:hover{
+    background: #006669;
+    color: white !important;
+    transition: 5s;
+}
+.news-content .main-content-news .news .news-image{
+    width: 40%;
+    height: 100%;
+    float: left;
+}
+.news-content .main-content-news .news .news-review{
+    width: 60%;
+    padding: 10px;
+    float: right;
+}
+.news-content .main-content-news .recent-news-articles{
+    margin: 20px;
+}
+.news-content .sidenews{
+    width: 30%;
+    float: left;
+    height: 300px;
+}
+.news-content .sidenews .section-news-titles{
+    margin: 10px 0px 10px 0px;
+}
+.news-content .sidenews .section-news{
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+.news-content .sidenews .section-news.search{
+     margin-top: 80px;
+}
+.news-content .sidenews .section-news.topics ul{
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    border-bottom: 1px solid #e0e0e0;
+}
+.news-content .sidenews .section-news.topics ul li a{
+    display: block;
+    padding: 15px 0px 15px 0px;
+    border-top: 1px solid #e0e0e0;
+    transition: all 0.3s;
+    color: black;
+}
+.news-content .sidenews .section-news.topics ul li a:hover{
+    padding-left: 10px;
+    transition: all 0.3s;
+}
+.text-input{
+    padding: .7rem 1rem;
+    display: block;
+    width: 100%;
+    border-radius: 5px;
+    font-size: 1.2em;
+    border: 1px solid #e0e0e0;
+    outline: none;
+    color: #444;
+    line-height: 1.2em;
+    font-family: 'Lora', serif;
+}
