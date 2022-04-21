@@ -92,7 +92,6 @@
               {% if news_articles %}
               {% for news in news_articles %}
               <div class="news">
-                <img src="/static/itrader/images/pexels-photo-1229861.jpeg" alt="" class="news-image">
                   <div class="news-review">                  
                       <h2><a href="{{news.link}}">{{news.title}}</a></h2>
                       <i class='bx bxs-user-badge'></i>
@@ -116,15 +115,11 @@
               </div>
               <div class="section-news topics">
                   <h2 class="section-news title">Topics</h2>
+                  {% for topic in topics %}
                   <ul>
-                      <li><a href="#">Safaricom</a></li>
-                      <li><a href="#">Safaricom</a></li>
-                      <li><a href="#">Safaricom</a></li>
-                      <li><a href="#">Safaricom</a></li>
-                      <li><a href="#">Safaricom</a></li>
-                      <li><a href="#">Safaricom</a></li>
-                      <li><a href="#">Safaricom</a></li>
+                      <li><a href="#">{{topic.security}}</a></li>                     
                   </ul>
+                  {% endfor %}
 
               </div>
 

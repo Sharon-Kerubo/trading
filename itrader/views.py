@@ -29,8 +29,9 @@ def aboutus(request):
     return render(request, "itrader/aboutus.html")
 
 def news(request):
-    news_articles = News.objects.order_by('date')[:5]
-    return render(request, 'itrader/news.html', {'news_articles': news_articles})
+    news_articles = News.objects.order_by('date')
+    topics = StockData.objects.all()
+    return render(request, 'itrader/news.html', {'news_articles': news_articles, 'topics':topics})
 
 def dashboard(request):
     username = None

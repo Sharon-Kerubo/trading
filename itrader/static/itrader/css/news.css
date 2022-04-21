@@ -16,18 +16,15 @@
 .news-content{
     width: 90%;
     margin: 30px auto 30px;
-    border: 1px solid red;
 }
 .news-content .main-content-news{
     width: 70%;
     height: 90vh;
     overflow: auto;
     float: left;
-    border: 1px solid blue;
 }
 .news-content .main-content-news .news{
     width: 95%;
-    height: 270px;
     margin: 20px auto;
     border-radius: 5px;
     background: white;
@@ -47,15 +44,9 @@
     color: white !important;
     transition: 5s;
 }
-.news-content .main-content-news .news .news-image{
-    width: 40%;
-    height: 100%;
-    float: left;
-}
 .news-content .main-content-news .news .news-review{
     width: 60%;
     padding: 10px;
-    float: right;
 }
 .news-content .main-content-news .recent-news-articles{
     margin: 20px;
@@ -63,7 +54,8 @@
 .news-content .sidenews{
     width: 30%;
     float: left;
-    height: 300px;
+    overflow: auto;
+    height: 90vh;
 }
 .news-content .sidenews .section-news-titles{
     margin: 10px 0px 10px 0px;

@@ -17,6 +17,7 @@ body{
     position: absolute;
     left: 0;
     top: 0;
+    height: 100%;
     padding: 20px;
     z-index: 7
 }

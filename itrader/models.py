@@ -72,29 +72,4 @@ class News(models.Model):
     link = models.CharField(max_length=200)
     content =  models.TextField()
     date = models.CharField(max_length=200)
-
-
-# def get_default_category():
-#     # get_or_create returns a tuple and we will only need the first value, which is the object
-#     return Package_Category.objects.get_or_create(name="Free")[0]
-
-# package_category = models.ForeignKey(Package_Category, on_delete=models.DO_NOTHING, verbose_name="Package Category", null=True, default=get_default_category)
-
-
-# class PublicRoomChatMessageManager(models.Manager):
-#     def by_room(self,room):
-#         #return new messages first
-#         qs = PublicRoomChatMessage.object.filter(room=room).order_by("-timestamp")
-#         return qs
-
-# class PublicRoomChatMessage(models.Model):
-#     # Chat message created by user inside a PublicChatRoom
-#     username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-#     room = models.ForeignKey(PublicChatRoom, on_delete=models.CASCADE)
-#     timestamp = models.DateTimeField(auto_now_add = True)
-#     content = models.TextField(unique=False, blank=False)
-
-#     objects =PublicRoomChatMessageManager()
-
-#     class Meta:
-#         ordering = ('timestamp',)
+    sentimentscore = models.IntegerField()
