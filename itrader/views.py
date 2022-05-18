@@ -15,7 +15,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.forms import PasswordResetForm
 from django.db.models.query_utils import Q
 import json, psycopg2
-from .models import Message, Room, StockData, Trade, News
+from .models import Message, Room, StockData, Trade, News, CompanyProfile
 from django.contrib.auth.models import User
 
 
@@ -190,6 +190,7 @@ def password_reset_request(request):
 
 def itrader(request):
     username = None
+    profile = CompanyProfile.objects.all()
     if request.user.is_authenticated:
         username = request.user.username
     try:
@@ -209,9 +210,10 @@ def itrader(request):
         data = cur.fetchone()
 
         data = json.dumps(data[0])
+        profile = json.dumps(profile)
         #close cursor
         cur.close()  
-        return render(request, "itrader/itrader.html",  {'data': data, 'username':username})
+        return render(request, "itrader/itrader.html",  {'data': data, 'username':username, 'profile':profile})
     except:
        return ('Error Connecting') 
     finally:
