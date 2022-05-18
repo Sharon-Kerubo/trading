@@ -1,9 +1,11 @@
 from django.shortcuts import redirect, render
+from django.http.response import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout as django_logout
 from django.contrib.auth.decorators import login_required
+from urllib3 import HTTPResponse
 from trading import settings
 from django.core.mail import send_mail, EmailMessage
 from django.contrib.sites.shortcuts import get_current_site
@@ -190,7 +192,6 @@ def password_reset_request(request):
 
 def itrader(request):
     username = None
-    profile = CompanyProfile.objects.all()
     if request.user.is_authenticated:
         username = request.user.username
     try:
@@ -205,17 +206,18 @@ def itrader(request):
 
         #cursor
         cur = con.cursor()
-        #execute query
+        #execute querys
         cur .execute("select array_to_json(array_agg(row_to_json(stockdata))) from(select security,lastprice,demandqty,demandprice, supplyprice,supplyqty,lastqty,high,low from itrader_stockdata) stockdata")
         data = cur.fetchone()
-
         data = json.dumps(data[0])
-        profile = json.dumps(profile)
+        cur.execute("select array_to_json(array_agg(row_to_json(companyprofile))) from(select security,profile from itrader_companyprofile) companyprofile")
+        profile = cur.fetchone()
+        profile = json.dumps(profile[0])
         #close cursor
         cur.close()  
         return render(request, "itrader/itrader.html",  {'data': data, 'username':username, 'profile':profile})
     except:
-       return ('Error Connecting') 
+       return('Error Connecting') 
     finally:
         #close the connection
         con.close()  

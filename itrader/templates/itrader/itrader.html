@@ -158,7 +158,7 @@
                         <label class="labelt" for="tabtree">About</label>
                         <div class="tab">
                             <span id="selectedRow"></span>
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sequi placeat consequuntur eos quae fuga assumenda officiis quam minima facilis dolorem. Perferendis tenetur repellendus officia odit ipsa unde necessitatibus sunt reiciendis.</p>
+                            <p><span id="selectedProfile"></span></p>
 
                         </div>
                         
@@ -221,10 +221,18 @@
             selectedsec;
         document.querySelector('#selectedRow').innerHTML =
             selectedsec;
-       var profile = JSON.parse('{{ profile | safe }}');
-        console.log(profile);
-    }
-    
+        var profile = JSON.parse('{{ profile | escapejs }}');
+        for (var i = 0; i < profile.length; i++){
+            var obj = profile[i];
+            var keys = Object.keys(obj)
+            if (keys[0] == 'security'){
+                if (obj[keys[0]] == selectedsec){
+                    document.querySelector('#selectedProfile').innerHTML =
+                    obj[keys[1]];
+                }
+                }
+            } 
+        }
 
    
     function onFirstDataRendered(params) {
