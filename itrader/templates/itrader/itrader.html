@@ -189,6 +189,7 @@
                                         <!--<img src="images/sunglasses.jpg" alt="">-->
                                         <span id="selectedRowG"></span>
                                         </a>
+                                        <span id="trend"></span><br>
                                         <span class="price">+3.68</span>
                                     </li>
                                     <div id="container" style="height:50vh; width:70vh">
@@ -249,6 +250,7 @@
                 }
                 }
         ;} 
+        //corporate action
         var action = JSON.parse('{{ action | escapejs }}');
         for (var a = 0; a < action.length; a++){
             var obje = action[a];
@@ -263,6 +265,41 @@
                 }
             }
         };
+        //analysis
+        var equity = JSON.parse('{{ equity | escapejs }}');
+        var res = []
+        for (var e = 0; e< equity.length; e++){
+            res.push(equity[e][Object.keys(equity[e])])
+        }
+        console.log(res)
+        let countp = 0
+        let countneu = 0
+        let countn = 0
+        res.forEach(element => {
+            if (element === 1){
+                countp += 1;
+            }
+        });
+        res.forEach(element => {
+            if (element === 0){
+                countneu +=1 ;
+            }
+        });
+        res.forEach(element => {
+            if (element === -1){
+                countn += 1;
+            }
+        });
+        result = Math.max(countp,countneu,countn)
+        if (countp == result){
+            document.querySelector('#trend').innerHTML ="<i class='bx bx-up-arrow-alt'></i><span class='text'>Going Up</span>"
+        }else if (countneu == result){
+            console.log('neutral')
+        }else{
+            console.log('negative')
+        }
+
+
     }
 
    

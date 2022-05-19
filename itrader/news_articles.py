@@ -17,7 +17,7 @@ try:
     cur = con.cursor()
       
     #Get HTML content
-    r1 = requests.get("https://www.businessdailyafrica.com/bd/markets")
+    r1 = requests.get("https://www.businessdailyafrica.com/bd/corporate")
     r1.encoding = 'utf-8'
     coverpage = r1.content
 

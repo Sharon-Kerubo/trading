@@ -216,10 +216,13 @@ def itrader(request):
         cur.execute("select array_to_json(array_agg(row_to_json(corporateaction))) from(select security,action,date from itrader_corporateaction) corporateaction")
         action = cur.fetchone()
         action = json.dumps(action[0])
+        cur.execute("select array_to_json(array_agg(row_to_json(equity))) from(select sentimentscore from itrader_news where content LIKE '%equity%') equity")
+        equity = cur.fetchone()
+        equity = json.dumps(equity[0])
         
         #close cursor
         cur.close()  
-        return render(request, "itrader/itrader.html",  {'data': data, 'username':username, 'profile':profile,'action':action})
+        return render(request, "itrader/itrader.html",  {'data': data, 'username':username, 'profile':profile,'action':action,'equity':equity})
     except:
        return('Error Connecting') 
     finally:
