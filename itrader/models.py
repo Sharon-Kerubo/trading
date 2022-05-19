@@ -77,3 +77,8 @@ class CompanyProfile(models.Model):
     security = models.CharField(max_length=20, unique=True)
     profile = models.TextField()
 
+class CorporateAction(models.Model):
+    security = models.CharField(max_length=20)
+    action = models.TextField()
+    date = models.CharField(max_length=200)
+

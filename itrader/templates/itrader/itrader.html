@@ -15,6 +15,15 @@
     <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
     <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-balham.css">
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-core.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-stock.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-data-adapter.min.js"></script>
+
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-ui.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-exports.min.js"></script>
+
+    <link href="https://cdn.anychart.com/releases/8.11.0/css/anychart-ui.min.css" type="text/css" rel="stylesheet">
+    <link href="https://cdn.anychart.com/releases/8.11.0/fonts/css/anychart-font.min.css" type="text/css" rel="stylesheet">   
             <meta name= "viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
@@ -155,32 +164,40 @@
                     <div class="mytabs">
                         
                         <input type="radio" id="tababout" name="mytabs" checked="checked">
-                        <label class="labelt" for="tabtree">About</label>
+                        <label class="labelt" for="tababout">About</label>
                         <div class="tab">
                             <span id="selectedRow"></span>
-                            <p><span id="selectedProfile"></span></p>
+                            <p><small id="selectedProfile"></small></p>
 
                         </div>
                         
                         <input type="radio" id="tabdocuments" name="mytabs">
-                        <label class="labelt" for="tabdocuments">Documents</label>
+                        <label class="labelt" for="tabdocuments">Corporate Actions</label>
                         <div class="tab">
                             <span id="selectedRow"></span>
-                            <embed src = "C:\Trading Application\trading\data\BBK_AR20_EN.pdf" type="application/pdf" width="50%" />
+                            <p><small id="selectedaction"></small><small> - </small><small id="actiondate"></small></p>
+                            
                         </div>
 
                         <input type="radio" id="tabgraph" name="mytabs">
                         <label class="labelt" for="tabgraph">Graph</label>
                         <div class="tab">
-                            <span id="selectedRow"></span>
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sequi placeat consequuntur eos quae fuga assumenda officiis quam minima facilis dolorem. Perferendis tenetur repellendus officia odit ipsa unde necessitatibus sunt reiciendis.</p>
+                            <div class="top-sales box">
+                                <ul class="top-sales-details">
+                                    <li>
+                                        <a href="#">
+                                        <!--<img src="images/sunglasses.jpg" alt="">-->
+                                        <span id="selectedRowG"></span>
+                                        </a>
+                                        <span class="price">+3.68</span>
+                                    </li>
+                                    <div id="container" style="height:50vh; width:70vh">
+                                    </div>
+                                </ul>
+                            </div>
                         </div>
-                       
                     </div>
-                   
-                    
                 </div>
-              
             </div>
         </div>
       </div>  
@@ -204,8 +221,6 @@
         columnDefs: columnDefs,
         rowSelection: 'single',
         rowClass: 'js-menu-toggle menu-toggle',
-        // onRowClicked: event => document.querySelector(".buysell").classList.toggle("active"),
-        // onRowClicked: event =>ocument.querySelector('<div class="toggle"><a href="#" class="js-menu-toggle menu-toggle"><span class="icon-mode_comment text-black"></span></a></div>'),
         rowData: JSON.parse('{{ data | safe }}'),
         onFirstDataRendered: onFirstDataRendered,
         onSelectionChanged: onSelectionChanged,
@@ -221,6 +236,8 @@
             selectedsec;
         document.querySelector('#selectedRow').innerHTML =
             selectedsec;
+        document.querySelector('#selectedRowG').innerHTML =
+            selectedsec;
         var profile = JSON.parse('{{ profile | escapejs }}');
         for (var i = 0; i < profile.length; i++){
             var obj = profile[i];
@@ -231,8 +248,22 @@
                     obj[keys[1]];
                 }
                 }
-            } 
-        }
+        ;} 
+        var action = JSON.parse('{{ action | escapejs }}');
+        for (var a = 0; a < action.length; a++){
+            var obje = action[a];
+            var keysa = Object.keys(obje)
+            if (keysa[0] == 'security'){
+                if (obje[keysa[0]] == selectedsec){
+                    document.querySelector('#selectedaction').innerHTML =
+                    obje[keysa[1]];
+                    document.querySelector('#actiondate').innerHTML =
+                    obje[keysa[2]];
+                    
+                }
+            }
+        };
+    }
 
    
     function onFirstDataRendered(params) {
@@ -244,6 +275,66 @@
         new agGrid.Grid(eGridDiv, gridOptions);
     });
     </script>
+    <script>
+        anychart.onDocumentReady(function () {
+          anychart.data.loadCsvFile(
+            'https://gist.githubusercontent.com/shacheeswadia/cd509e0b0c03964ca86ae7d894137043/raw/5f336c644ad61728dbac93026f3268b86b8d0680/teslaDailyData.csv',
+            function (data) {
+              // create data table on loaded data
+              var dataTable = anychart.data.table();
+              dataTable.addData(data);
+        
+              // map loaded data for the candlestick series
+              var mapping = dataTable.mapAs({
+                open: 1,
+                high: 2,
+                low: 3,
+                close: 4
+              });
+        
+              // create stock chart
+              var chart = anychart.stock();
+        
+              // create first plot on the chart
+              var plot = chart.plot(0);
+              
+              // set grid settings
+              plot.yGrid(true).xGrid(true).yMinorGrid(true).xMinorGrid(true);
+        
+              var series = plot.candlestick(mapping)
+                .name('Safaricom');
+              series.legendItem().iconType('rising-falling');
+        
+              // create scroller series with mapped data
+              chart.scroller().candlestick(mapping);
+        
+              // set chart selected date/time range
+              chart.selectRange('2020-11-27', '2021-11-26');
+        
+              // create range picker
+              var rangePicker = anychart.ui.rangePicker();
+              
+              // init range picker
+              rangePicker.render(chart);
+        
+              // create range selector
+              var rangeSelector = anychart.ui.rangeSelector();
+              
+              // init range selector
+              rangeSelector.render(chart);
+              
+              // sets the title of the chart
+              chart.title('Safaricom PLC. Stock Chart');
+              
+              // set container id for the chart
+              chart.container('container');
+              
+              // initiate chart drawing
+              chart.draw();
+            }
+          );
+        });
+        </script>
     <script src="{% static 'itrader/js/script.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

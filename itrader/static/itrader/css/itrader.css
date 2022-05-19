@@ -233,9 +233,8 @@ body {
 .home_content{
     position: absolute;
     height: 60vh;
-    width: 100%;
+    width: calc(100% - 78px);
     left: 78px;
-    right:78px;
     transition: all 0.5s ease;
 }
 .home_content .text{
