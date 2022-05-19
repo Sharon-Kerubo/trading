@@ -61,13 +61,6 @@
             </a>
             <span class="tooltip">Chat</span>
         </li>
-        <li>
-            <a href="orderhistory">
-                <i class='bx bx-money-withdraw'></i>
-                <span class="links_name">Portfolio</span>
-            </a>
-            <span class="tooltip">Order History</span>
-        </li>
     </ul>
       <div class="profile_content">
           <div class="profile">
@@ -88,7 +81,7 @@
       <div class="container" style="height:100%;">
       <div class="row clearfix" style="height:100%;">
           <div class="col-lg-12">
-              <div class="card chat-app" style="height:90%;">
+              <div class="card chat-app" style="height:85vh;">
                   <div id="plist" class="people-list">
                       <div class="input-group">
                           <div class="input-group-prepend">
@@ -96,7 +89,7 @@
                           </div>
                           <input type="text" class="form-control" placeholder="Search...">
                       </div>
-                      <ul class="list-unstyled chat-list mt-2 mb-0" style="overflow: auto; height:90vh;">
+                      <ul class="list-unstyled chat-list mt-2 mb-0" style="overflow: auto; max-height:90vh; height: 90%;">
                           {% for r in rooms %}
                           <li class="clearfix" id="room-name-submit">
                               <div class="about">
@@ -107,7 +100,7 @@
                                    
                       </ul>
                   </div>
-                  <div class="chat" style="height:79.5%;">
+                  <div class="chat" style="height:80vh;">
                       <div class="chat-header clearfix">
                           <div class="row">
                               <div class="col-lg-6">
@@ -123,7 +116,7 @@
                               </div>
                           </div>
                       </div>
-                      <div class="chat-history" id="chat-messages" style="height:90%; overflow-y:scroll;">
+                      <div class="chat-history" id="chat-messages" style="height:80%; overflow-y:scroll;">
                         {% for m in messages %}
                           <ul class="m-b-0">
                               <li class="clearfix">
@@ -152,13 +145,13 @@
                           </ul>
                         {% endfor %}
                       </div>
-                      <div class="chat-message clearfix">
+                      <!-- <div class="chat-message clearfix">
                           <div class="input-group mb-0">
                               <div class="input-group-prepend" id="chat-message-submit"> 
                                   <span class="input-group-text" ><i class="fa fa-send"></i></span>
                               </div>
                               <input type="text" class="form-control" id="chat-message-input" placeholder="Enter text here...">                                    
-                          </div>
+                          </div> -->
                       </div>
                   </div>
               </div>

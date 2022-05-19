@@ -457,7 +457,7 @@ color: #fff;
     left: 78px;
     right:78px;
     transition: all 0.5s ease;
-    background-color: #ccc;
+    background-color: #f5f6fa;
 }
 .content .text{
     /* font-size: 25px; */
@@ -478,13 +478,13 @@ color: #fff;
     display:none;
 }
 .mytabs .labelt {
-    padding: 25px;
-    background: #e2e2e2;
+    padding: 15px;
+    background: #f5f6fa;
     font-weight: bold;
 }
 .mytabs .tab{
     width: 100%;
-    background: #fff;
+    background: #f5f6fa;
     order: 1;
     display: none;
 }

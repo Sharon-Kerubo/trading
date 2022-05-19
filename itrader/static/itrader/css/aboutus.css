@@ -10,6 +10,58 @@
     min-height: 100vh;
     background-image: linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.75)), url('/static/itrader/images/pexels-photo-1229861.jpeg');
 }
+.navbar{
+    width: 85%;
+    margin: auto;
+    padding: 35px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo_content .logo{
+    width:25px;
+    cursor: pointer;
+    color: #fff;
+    display: flex;
+    height: 50px;
+    width: 100%;
+    align-items: center;
+    pointer-events: none;
+    transition: all 0.5s ease;
+}
+.logo_content .logo i{
+    font-size: 28px;
+    margin-right: 5px;
+}
+.logo_content .logo .logo_name{
+    font-size: 20px;
+    font-weight: 400;
+}
+.navbar ul li{
+    list-style: none;
+    display: inline-block;
+    margin:0 20px;
+    position: relative;
+}
+.navbar ul li a{
+    text-decoration: none;
+    color: #fff;
+    text-transform: uppercase;
+}
+.navbar ul li::after{
+    content: '';
+    height: 3px;
+    width: 0;
+    background: #009688;
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    transition: 0.5s;
+}
+.navbar ul li:hover::after{
+    width: 100%;
+}
 .container{
     width: 80%;
     display: block;
@@ -87,7 +139,7 @@ span{
 }
 .content-section .social i:hover{
     color: #3d3d3d;
-}
+/* }
 @media screen and (max-width: 768px){
     .container{
         width: 80%;
@@ -126,5 +178,5 @@ span{
     .content-section .social{
         text-align: center;
 
-    }
+    } */
 }

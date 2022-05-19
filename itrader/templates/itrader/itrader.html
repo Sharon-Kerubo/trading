@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{% static 'itrader/fonts/icomoon/style.css' %}">
     <link rel="stylesheet" href="{% static 'itrader/css/owl.carousel.min.css' %}">
     <link rel="stylesheet" href="{% static 'itrader/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'itrader/css/dashboard.css' %}">
     <title> iTrader </title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'itrader/css/itrader.css' %}">
@@ -133,13 +134,6 @@
                         </a>
                         <span class="tooltip">Chat</span>
                     </li>
-                    <li>
-                        <a href="orderhistory">
-                            <i class='bx bx-money-withdraw'></i>
-                            <span class="links_name">Portfolio</span>
-                        </a>
-                        <span class="tooltip">Order History</span>
-                    </li>
                 </ul>
                 <div class="profile_content">
                     <div class="profile">
@@ -156,7 +150,12 @@
                 </div>
             </div>
                 <div class="home_content">
-                    <div class="text">Home Content</div>
+                    <nav>
+                        <div class="search-box">
+                            <input type="text" placeholder="Search...">
+                            <i class='bx bx-search' ></i>
+                        </div>
+                        </nav>
                     <div id="myGrid" style="height: 90%; width:100%; position: absolute;" class="ag-theme-balham"></div>     
                 </div>
                 <div class="content">
@@ -217,11 +216,13 @@
         {headerName: 'High', field: 'high', sortable:true, filter:true},
         {headerName: 'Low', field: 'low', sortable:true, filter:true},
     ];
-
     const gridOptions = {
         columnDefs: columnDefs,
         rowSelection: 'single',
-        rowClass: 'js-menu-toggle menu-toggle',
+       
+        rowClass: 'js-menu-toggle menu-toggle ',
+        // onRowClicked: event => document.querySelector(".buysell").classList.toggle("active"),
+        // onRowClicked: event => document.querySelector(".buysell").classList.add("js-menu-toggle menu-toggle"),
         rowData: JSON.parse('{{ data | safe }}'),
         onFirstDataRendered: onFirstDataRendered,
         onSelectionChanged: onSelectionChanged,
@@ -292,7 +293,7 @@
         });
         result = Math.max(countp,countneu,countn)
         if (countp == result){
-            document.querySelector('#trend').innerHTML ="<i class='bx bx-up-arrow-alt'></i><span class='text'>Going Up</span>"
+            document.querySelector('#trend').innerHTML ="<i class='bx bx-trending-up' style='font-size:50px;'></i><span class='text'>Going Up</span>"
         }else if (countneu == result){
             console.log('neutral')
         }else{

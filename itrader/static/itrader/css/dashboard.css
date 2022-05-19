@@ -110,7 +110,7 @@
   font-weight: 500;
 }
 nav .sidebar-button i{
-  font-size: 35px;
+  font-size: 28px;
   margin-right: 10px;
 }
 .home-section nav .search-box{
@@ -196,12 +196,12 @@ nav .profile-details i{
   box-shadow: 0 5px 10px rgba(0,0,0,0.1);
 }
 .overview-boxes .box-topic{
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 500;
 }
 .home-content .box .number{
   display: inline-block;
-  font-size: 35px;
+  font-size: 24px;
   margin-top: -6px;
   font-weight: 500;
 }
@@ -275,12 +275,12 @@ nav .profile-details i{
   justify-content: space-between;
 }
 .sales-boxes .box .title{
-  font-size: 24px;
+  font-size: 16px;
   font-weight: 500;
   /* margin-bottom: 10px; */
 }
 .sales-boxes .sales-details li.topic{
-  font-size: 20px;
+  font-size: 14px;
   font-weight: 500;
 }
 .sales-boxes .sales-details li{
@@ -288,7 +288,7 @@ nav .profile-details i{
   margin: 8px 0;
 }
 .sales-boxes .sales-details li a{
-  font-size: 18px;
+  font-size: 12px;
   color: #333;
   font-size: 400;
   text-decoration: none;

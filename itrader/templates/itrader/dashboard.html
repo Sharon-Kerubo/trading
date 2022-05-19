@@ -64,13 +64,6 @@
                 </a>
                 <span class="tooltip">Chat</span>
             </li>
-            <li>
-                <a href="orderhistory">
-                    <i class='bx bx-money-withdraw'></i>
-                    <span class="links_name">Portfolio</span>
-                </a>
-                <span class="tooltip">Order History</span>
-            </li>
         </ul>
         <div class="profile_content">
             <div class="profile">
@@ -97,7 +90,7 @@
             <i class='bx bx-search' ></i>
         </div>
         <div class="profile-details">
-            <img src="images/profile.jpg" alt="">
+            <img src="{% static 'itrader\images\alex-starnes-PK_t0Lrh7MM-unsplash.jpg' %}" alt="">
             <span class="admin_name">{{ username}}</span>
             <i class='bx bx-chevron-down' ></i>
         </div>
@@ -204,7 +197,7 @@
             <li>
                 <a href="#">
                 <!--<img src="images/sunglasses.jpg" alt="">-->
-                <span class="product">SCOM</span>
+                <span class="product">ARM</span>
                 </a>
                 <span class="price">+3.68</span>
             </li>
@@ -242,7 +235,7 @@ anychart.onDocumentReady(function () {
       plot.yGrid(true).xGrid(true).yMinorGrid(true).xMinorGrid(true);
 
       var series = plot.candlestick(mapping)
-        .name('Safaricom');
+        .name('ARM');
       series.legendItem().iconType('rising-falling');
 
       // create scroller series with mapped data
@@ -264,7 +257,7 @@ anychart.onDocumentReady(function () {
       rangeSelector.render(chart);
       
       // sets the title of the chart
-      chart.title('Safaricom PLC. Stock Chart');
+      chart.title('ARM. Stock Chart');
       
       // set container id for the chart
       chart.container('container');
