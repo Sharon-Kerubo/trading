@@ -221,8 +221,6 @@
         rowSelection: 'single',
        
         rowClass: 'js-menu-toggle menu-toggle ',
-        // onRowClicked: event => document.querySelector(".buysell").classList.toggle("active"),
-        // onRowClicked: event => document.querySelector(".buysell").classList.add("js-menu-toggle menu-toggle"),
         rowData: JSON.parse('{{ data | safe }}'),
         onFirstDataRendered: onFirstDataRendered,
         onSelectionChanged: onSelectionChanged,
@@ -316,7 +314,9 @@
     <script>
         anychart.onDocumentReady(function () {
           anychart.data.loadCsvFile(
-            'https://gist.githubusercontent.com/shacheeswadia/cd509e0b0c03964ca86ae7d894137043/raw/5f336c644ad61728dbac93026f3268b86b8d0680/teslaDailyData.csv',
+            // 'https://gist.githubusercontent.com/shacheeswadia/cd509e0b0c03964ca86ae7d894137043/raw/5f336c644ad61728dbac93026f3268b86b8d0680/teslaDailyData.csv',
+            'C:/Trading Application/trading/data/SCOM.csv',
+
             function (data) {
               // create data table on loaded data
               var dataTable = anychart.data.table();
