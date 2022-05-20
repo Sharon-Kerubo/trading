@@ -293,9 +293,9 @@
         if (countp == result){
             document.querySelector('#trend').innerHTML ="<i class='bx bx-trending-up' style='font-size:50px;'></i><span class='text'>Going Up</span>"
         }else if (countneu == result){
-            console.log('neutral')
+            document.querySelector('#trend').innerHTML ="<i class='bx bx-trending-up' style='font-size:50px;'></i><span class='text'>Neutral</span>"
         }else{
-            console.log('negative')
+            document.querySelector('#trend').innerHTML ="<i class='bx bx-trending-down' style='font-size:50px;'></i><span class='text'>Going Down</span>"
         }
 
 
@@ -314,8 +314,7 @@
     <script>
         anychart.onDocumentReady(function () {
           anychart.data.loadCsvFile(
-            // 'https://gist.githubusercontent.com/shacheeswadia/cd509e0b0c03964ca86ae7d894137043/raw/5f336c644ad61728dbac93026f3268b86b8d0680/teslaDailyData.csv',
-            'C:/Trading Application/trading/data/SCOM.csv',
+            'https://raw.githubusercontent.com/Sharon-Kerubo/trading/Sharon/data/SCOM.csv',
 
             function (data) {
               // create data table on loaded data
@@ -340,7 +339,7 @@
               plot.yGrid(true).xGrid(true).yMinorGrid(true).xMinorGrid(true);
         
               var series = plot.candlestick(mapping)
-                .name('Safaricom');
+                .name('');
               series.legendItem().iconType('rising-falling');
         
               // create scroller series with mapped data

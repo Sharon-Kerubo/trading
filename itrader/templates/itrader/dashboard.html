@@ -156,7 +156,7 @@
                     {% endfor %}
                 </ul>
                 <ul class="details">
-                    <li class="topic">Security</li>
+                    <li class="topic" id="pick" >Security</li>
                     {% for trades in activetrades %}
                     <li><a href="#">{{ trades.security.security}}</a></li>
                     {% endfor %}
@@ -211,7 +211,7 @@
 <script>
 anychart.onDocumentReady(function () {
   anychart.data.loadCsvFile(
-    'https://gist.githubusercontent.com/shacheeswadia/cd509e0b0c03964ca86ae7d894137043/raw/5f336c644ad61728dbac93026f3268b86b8d0680/teslaDailyData.csv',
+    'https://raw.githubusercontent.com/Sharon-Kerubo/trading/Sharon/data/SCOM.csv',
     function (data) {
       // create data table on loaded data
       var dataTable = anychart.data.table();
